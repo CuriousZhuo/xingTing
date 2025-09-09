@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惺亭互动研学网页</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        .history-text {
+            font-family: 'Noto Serif SC', serif;
+            border-left: 4px solid #8e44ad;
+            background-color: #f5f0f7;
+        }
+        .architecture-text {
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #3498db;
+            background-color: #f0f7fd;
+        }
+        .modern-text {
+            border-left: 4px solid #2ecc71;
+            background-color: #f0f9f0;
+        }
+        .morse-game {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            border-radius: 12px;
+        }
+        .map-container {
+            height: 200px;
+            background-color: #e9f5ff;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            background-color: #f0f4ff;
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        .morse-key {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .morse-key:hover {
+            background-color: #e0e7ff;
+        }
+        .comment-card {
+            border-left: 3px solid #6366f1;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 md:px-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-indigo-800">惺亭互动研学网页</h1>
+        
+        <!-- 互动答题模块 -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-question-circle text-purple-600 mr-3"></i>
+                互动答题
+            </h2>
+            
+            <div id="quizContainer">
+                <!-- 题目1 -->
+                <div class="mb-6 quiz-item" data-quiz="1">
+                    <p class="font-medium mb-3">1. 惺亭是由中山大学校方于1950年代出资修建的。</p>
+                    <div class="flex space-x-4">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="false">
+                            <i class="far fa-circle mr-2"></i> 正确
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="true">
+                            <i class="far fa-circle mr-2"></i> 错误
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：错误。它是由岭南大学1928年毕业班"惺社"同学捐资修建的。
+                    </div>
+                </div>
+                
+                <!-- 题目2 -->
+                <div class="mb-6 quiz-item" data-quiz="2">
+                    <p class="font-medium mb-3">2. 惺亭最初是为了纪念以下哪几位人物？</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="A">
+                            <i class="far fa-circle mr-2"></i> A. 孙中山、陈寅恪、鲁迅
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="B">
+                            <i class="far fa-circle mr-2"></i> B. 史坚如、区励周、许耀章
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="C">
+                            <i class="far fa-circle mr-2"></i> C. 梁启超、康有为、袁崇焕
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：B。纪念辛亥革命烈士史坚如和沙基惨案中牺牲的区励周、许耀章。
+                    </div>
+                </div>
+                
+                <!-- 题目3 -->
+                <div class="mb-6 quiz-item" data-quiz="3">
+                    <p class="font-medium mb-3">3. 惺亭中的钟历史上是用来召唤学生上下课和集合的。</p>
+                    <div class="flex space-x-4">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="true">
+                            <i class="far fa-circle mr-2"></i> 正确
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="false">
+                            <i class="far fa-circle mr-2"></i> 错误
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：正确。亭中曾悬有大钟，用于作息报时。
+                    </div>
+                </div>
+                
+                <!-- 题目4 -->
+                <div class="mb-6 quiz-item" data-quiz="4">
+                    <p class="font-medium mb-3">4. 亭额"惺亭"二字是由谁题写的？</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="A">
+                            <i class="far fa-circle mr-2"></i> A. 孙中山
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="B">
+                            <i class="far fa-circle mr-2"></i> B. 商承祚
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="C">
+                            <i class="far fa-circle mr-2"></i> C. 康有为
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：B。由古文字学家商承祚先生于1981年补书。
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quizSuccess" class="hidden bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+                    <div>
+                        <p class="font-medium text-green-700">恭喜您全部答对！</p>
+                        <p class="text-sm text-green-600 mt-1">线索：下一站线索：乙丑进士牌坊东侧</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 摩斯密码游戏 -->
+        <div class="glass-card p-6 mb-8 morse-game">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-key text-amber-600 mr-3"></i>
+                摩斯密码游戏
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">解密环节</h3>
+                    <p class="text-sm text-gray-600 mb-3">请解密以下摩斯密码："-..- / - / -.-- / .-.. / -.-- / -... / --"</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">输入解密结果:</label>
+                        <input type="text" id="decodeInput" class="w-full p-2 border rounded" placeholder="输入解密后的拼音首字母">
+                        <button onclick="checkDecode()" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交</button>
+                    </div>
+                    
+                    <div id="decodeResult" class="hidden bg-blue-50 p-3 rounded border border-blue-200">
+                        <p class="text-sm text-blue-700">解密成功！明文："惺亭英烈永不灭"</p>
+                    </div>
+                    
+                    <h3 class="text-lg font-medium mt-6 mb-2">加密环节</h3>
+                    <p class="text-sm text-gray-600 mb-3">请将"进士牌坊勉众生"转换为拼音首字母后加密为摩斯密码</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">输入加密结果:</label>
+                        <div class="flex space-x-2 mb-2">
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('.')">·</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('-')">-</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('/')">/</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode(' ')">空格</button>
+                            <button class="morse-key px-3 py-1 border rounded bg-red-100" onclick="clearMorseCode()">
+                                <i class="fas fa-backspace"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="encodeInput" class="w-full p-2 border rounded" placeholder="输入摩斯密码">
+                        <button onclick="checkEncode()" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交</button>
+                    </div>
+                    
+                    <div id="encodeResult" class="hidden bg-blue-50 p-3 rounded border border-blue-200">
+                        <p class="text-sm text-blue-700">加密成功！线索：完整路线：自惺亭沿中轴线西行30米</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-2">摩斯密码对照表</h3>
+                    <div class="bg-white p-3 rounded border">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="p-2 border">字母</th>
+                                    <th class="p-2 border">摩斯码</th>
+                                    <th class="p-2 border">字母</th>
+                                    <th class="p-2 border">摩斯码</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 border">A</td>
+                                    <td class="p-2 border">·-</td>
+                                    <td class="p-2 border">N</td>
+                                    <td class="p-2 border">-·</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">B</td>
+                                    <td class="p-2 border">-···</td>
+                                    <td class="p-2 border">O</td>
+                                    <td class="p-2 border">---</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">C</td>
+                                    <td class="p-2 border">-·-·</td>
+                                    <td class="p-2 border">P</td>
+                                    <td class="p-2 border">·--·</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">D</td>
+                                    <td class="p-2 border">-··</td>
+                                    <td class="p-2 border">Q</td>
+                                    <td class="p-2 border">--·-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">E</td>
+                                    <td class="p-2 border">·</td>
+                                    <td class="p-2 border">R</td>
+                                    <td class="p-2 border">·-·</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">F</td>
+                                    <td class="p-2 border">··-·</td>
+                                    <td class="p-2 border">S</td>
+                                    <td class="p-2 border">···</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">G</td>
+                                    <td class="p-2 border">--·</td>
+                                    <td class="p-2 border">T</td>
+                                    <td class="p-2 border">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">H</td>
+                                    <td class="p-2 border">····</td>
+                                    <td class="p-2 border">U</td>
+                                    <td class="p-2 border">··-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">I</td>
+                                    <td class="p-2 border">··</td>
+                                    <td class="p-2 border">V</td>
+                                    <td class="p-2 border">···-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">J</td>
+                                    <td class="p-2 border">·---</td>
+                                    <td class="p-2 border">W</td>
+                                    <td class="p-2 border">·--</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">K</td>
+                                    <td class="p-2 border">-·-</td>
+                                    <td class="p-2 border">X</td>
+                                    <td class="p-2 border">-··-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">L</td>
+                                    <td class="p-2 border">·-··</td>
+                                    <td class="p-2 border">Y</td>
+                                    <td class="p-2 border">-·--</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">M</td>
+                                    <td class="p-2 border">--</td>
+                                    <td class="p-2 border">Z</td>
+                                    <td class="p-2 border">--··</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-gray-500 mt-2">提示：中文转换为拼音首字母后再对应摩斯码</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评论功能 -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-comments text-indigo-600 mr-3"></i>
+                评论互动
+            </h2>
+            
+            <div class="mb-6">
+                <textarea id="commentInput" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500" rows="4" placeholder="请留下您的评论（10-500字）"></textarea>
+                <div class="flex justify-between items-center mt-2">
+                    <span id="commentCount" class="text-xs text-gray-500">0/500</span>
+                    <button id="submitComment" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交评论</button>
+                </div>
+                
+                <div id="verifyModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white p-6 rounded-lg max-w-md w-full">
+                        <h3 class="text-lg font-medium mb-4">请验证您的身份</h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-1">邮箱或手机号</label>
+                            <input type="text" id="verifyInput" class="w-full p-2 border rounded">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button onclick="closeVerifyModal()" class="px-4 py-2 border rounded">取消</button>
+                            <button onclick="submitVerify()" class="bg-indigo-600 text-white px-4 py-2 rounded">验证</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="commentsContainer">
+                <div class="comment-card bg-white p-4 rounded-lg shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="font-medium">游客</span>
+                            <span class="text-xs text-gray-500 ml-2">广东广州</span>
+                        </div>
+                        <span class="text-xs text-gray-500">2024-03-15</span>
+                    </div>
+                    <p class="text-gray-700">惺亭的历史非常感人，先烈精神值得我们学习！</p>
+                </div>
+                
+                <div class="comment-card bg-white p-4 rounded-lg shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="font-medium">历史爱好者</span>
+                            <span class="text-xs text-gray-500 ml-2">北京</span>
+                        </div>
+                        <span class="text-xs text-gray-500">2024-03-10</span>
+                    </div>
+                    <p class="text-gray-700">摩斯密码游戏很有创意，让孩子们在游戏中学习历史。</p>
+                </div>
+            </div>
+            
+            <div class="text-xs text-gray-500 mt-4">
+                <i class="fas fa-info-circle mr-1"></i> 评论内容及属地信息将被记录
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>created by <a href="https://space.coze.cn" class="text-indigo-600 hover:underline">coze space</a></p>
+            <p class="mt-1">页面内容均由 AI 生成，仅供参考</p>
+        </footer>
+    </div>
+
+    <script>
+        // 答题逻辑
+        $(document).ready(function() {
+            let correctCount = 0;
+            
+            $('.quiz-option').click(function() {
+                const $item = $(this).closest('.quiz-item');
+                const $options = $item.find('.quiz-option');
+                const correctAnswer = $(this).data('answer');
+                const isCorrect = $(this).data('answer') === 'true' || $(this).data('answer') === 'B';
+                
+                $options.removeClass('correct incorrect');
+                $(this).addClass(isCorrect ? 'correct' : 'incorrect');
+                
+                // 标记正确答案
+                $options.each(function() {
+                    if ($(this).data('answer') === 'true' || $(this).data('answer') === 'B') {
+                        $(this).addClass('correct');
+                    }
+                });
+                
+                $item.find('.quiz-feedback').removeClass('hidden');
+                
+                if (isCorrect) {
+                    correctCount++;
+                    if (correctCount === 4) {
+                        $('#quizSuccess').removeClass('hidden');
+                    }
+                }
+            });
+            
+            // 评论字数统计
+            $('#commentInput').on('input', function() {
+                const length = $(this).val().length;
+                $('#commentCount').text(length + '/500');
+                
+                if (length < 10 || length > 500) {
+                    $('#commentCount').addClass('text-red-500');
+                } else {
+                    $('#commentCount').removeClass('text-red-500');
+                }
+            });
+            
+            // 提交评论
+            $('#submitComment').click(function() {
+                const comment = $('#commentInput').val().trim();
+                if (comment.length < 10 || comment.length > 500) {
+                    alert('评论长度需在10-500字之间');
+                    return;
+                }
+                
+                $('#verifyModal').removeClass('hidden');
+            });
+        });
+        
+        // 摩斯密码游戏
+        function checkDecode() {
+            const input = $('#decodeInput').val().trim().toUpperCase();
+            if (input === 'XTYLYBM') {
+                $('#decodeResult').removeClass('hidden');
+            } else {
+                alert('解密错误，请检查输入！');
+            }
+        }
+        
+        function checkEncode() {
+            const input = $('#encodeInput').val().trim();
+            if (input === '.-. .--. ..-. -- ..--.. ... .... . -. --."') {
+                $('#encodeResult').removeClass('hidden');
+            } else {
+                alert('加密错误，请检查输入！');
+            }
+        }
+        
+        function addMorseCode(char) {
+            const $input = $('#encodeInput');
+            $input.val($input.val() + char);
+        }
+        
+        function clearMorseCode() {
+            $('#encodeInput').val('');
+        }
+        
+        // 验证模态框
+        function closeVerifyModal() {
+            $('#verifyModal').addClass('hidden');
+        }
+        
+        function submitVerify() {
+            const verifyInfo = $('#verifyInput').val().trim();
+            if (!verifyInfo) {
+                alert('请输入邮箱或手机号');
+                return;
+            }
+            
+            // 模拟验证成功
+            closeVerifyModal();
+            alert('验证码已发送，请查收并验证');
+            
+            // 这里应该是调用Firebase验证的逻辑
+            // 验证成功后提交评论
+            const comment = $('#commentInput').val().trim();
+            const now = new Date();
+            const dateStr = now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate();
+            
+            $('#commentsContainer').prepend(`
+                <div class="comment-card bg-white p-4 rounded-lg shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="font-medium">已验证用户</span>
+                            <span class="text-xs text-gray-500 ml-2">广东广州</span>
+                        </div>
+                        <span class="text-xs text-gray-500">${dateStr}</span>
+                    </div>
+                    <p class="text-gray-700">${comment}</p>
+                </div>
+            `);
+            
+            $('#commentInput').val('');
+            $('#commentCount').text('0/500');
+        }
+    </script>
+</body>
+</html>
