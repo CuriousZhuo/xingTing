@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惺亭互动研学网页</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(to bottom, #f0f4ff, #e6eeff);
+            color: #333;
+            background-attachment: fixed;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1517486808906-6ca8b3f8e1c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+        }
+        .history-text {
+            font-family: 'Noto Serif SC', serif;
+            border-left: 4px solid #8e44ad;
+            background-color: rgba(142, 68, 173, 0.08);
+        }
+        .architecture-text {
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #3498db;
+            background-color: rgba(52, 152, 219, 0.08);
+        }
+        .modern-text {
+            border-left: 4px solid #2ecc71;
+            background-color: rgba(46, 204, 113, 0.08);
+        }
+        .morse-game {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            border-radius: 16px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            background-color: #f0f4ff;
+            transform: translateX(5px);
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        .morse-key {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .morse-key:hover {
+            background-color: #e0e7ff;
+            transform: translateY(-2px);
+        }
+        .comment-card {
+            border-left: 3px solid #6366f1;
+            transition: all 0.3s ease;
+        }
+        .comment-card:hover {
+            transform: translateX(5px);
+        }
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #8e44ad, #3498db);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #8e44ad;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #8e44ad;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 md:px-8">
+    <div class="max-w-5xl mx-auto">
+        <!-- 头部标题区 -->
+        <div class="hero-section p-8 md:p-12 text-center text-white mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-float">惺亭互动研学之旅</h1>
+            <p class="text-xl md:text-2xl opacity-90">探索历史印记，传承革命精神</p>
+            <div class="mt-6">
+                <button id="startTourBtn" class="bg-white text-indigo-800 px-6 py-3 rounded-full font-semibold hover:bg-indigo-100 transition-all pulse">
+                    <i class="fas fa-play-circle mr-2"></i>开始研学之旅
+                </button>
+            </div>
+        </div>
+        
+        <!-- 研学导师讲解区 -->
+        <div id="mentorSection" class="glass-card p-6 md:p-8 mb-10 fade-in">
+            <div class="flex items-start mb-6">
+                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                    <i class="fas fa-chalkboard-teacher text-indigo-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-indigo-800">研学导师讲解</h2>
+                    <p class="text-gray-600">深入了解惺亭的历史与文化价值</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-purple-100 p-2 rounded-lg mr-3">
+                            <i class="fas fa-landmark text-purple-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">建筑特色</h3>
+                    </div>
+                    <p class="text-gray-700">惺亭是一座八角攒尖顶亭子，采用中西合璧的建筑风格。亭身由8根希腊式柱子支撑，顶部覆盖绿色琉璃瓦，整体造型典雅庄重。这种建筑风格反映了20世纪初中国建筑受西方影响的特点。</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                            <i class="fas fa-history text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">历史沿革</h3>
+                    </div>
+                    <p class="text-gray-700">惺亭建于1928年，由岭南大学1928年毕业班"惺社"同学捐资修建。最初是为了纪念史坚如、区励周、许耀章等革命烈士。在抗战期间，惺亭曾遭到破坏，后经多次修缮，成为中山大学校园内重要的历史文物。</p>
+                </div>
+            </div>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fas fa-timeline mr-2 text-indigo-600"></i>
+                    历史时间线
+                </h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4 class="font-semibold">1928年</h4>
+                        <p class="text-gray-700">由岭南大学"惺社"同学捐资修建，纪念史坚如、区励周、许耀章三位烈士</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold">1938年</h4>
+                        <p class="text-gray-700">抗战期间遭日军轰炸，部分损毁</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold">1945年</h4>
+                        <p class="text-gray-700">抗战胜利后进行首次修缮</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold">1981年</h4>
+                        <p class="text-gray-700">古文字学家商承祚先生为惺亭题字</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="font-semibold">2002年</h4>
+                        <p class="text-gray-700">被列入广州市文物保护单位</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-200">
+                <h3 class="text-xl font-semibold mb-3 flex items-center">
+                    <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                    研学思考题
+                </h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li>惺亭的建筑风格如何体现中西文化的融合？</li>
+                    <li>为什么说惺亭是中山大学精神的象征之一？</li>
+                    <li>在现代社会，我们应该如何纪念和传承革命精神？</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 互动答题模块 -->
+        <div class="glass-card p-6 mb-10 fade-in">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-question-circle text-purple-600 mr-3"></i>
+                互动答题
+            </h2>
+            
+            <div id="quizContainer">
+                <!-- 题目1 -->
+                <div class="mb-6 quiz-item" data-quiz="1">
+                    <p class="font-medium mb-3">1. 惺亭是由中山大学校方于1950年代出资修建的。</p>
+                    <div class="flex space-x-4">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="false">
+                            <i class="far fa-circle mr-2"></i> 正确
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="true">
+                            <i class="far fa-circle mr-2"></i> 错误
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：错误。它是由岭南大学1928年毕业班"惺社"同学捐资修建的。
+                    </div>
+                </div>
+                
+                <!-- 题目2 -->
+                <div class="mb-6 quiz-item" data-quiz="2">
+                    <p class="font-medium mb-3">2. 惺亭最初是为了纪念以下哪几位人物？</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="A">
+                            <i class="far fa-circle mr-2"></i> A. 孙中山、陈寅恪、鲁迅
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="B">
+                            <i class="far fa-circle mr-2"></i> B. 史坚如、区励周、许耀章
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="C">
+                            <i class="far fa-circle mr-2"></i> C. 梁启超、康有为、袁崇焕
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：B。纪念辛亥革命烈士史坚如和沙基惨案中牺牲的区励周、许耀章。
+                    </div>
+                </div>
+                
+                <!-- 题目3 -->
+                <div class="mb-6 quiz-item" data-quiz="3">
+                    <p class="font-medium mb-3">3. 惺亭中的钟历史上是用来召唤学生上下课和集合的。</p>
+                    <div class="flex space-x-4">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="true">
+                            <i class="far fa-circle mr-2"></i> 正确
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="false">
+                            <i class="far fa-circle mr-2"></i> 错误
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：正确。亭中曾悬有大钟，用于作息报时。
+                    </div>
+                </div>
+                
+                <!-- 题目4 -->
+                <div class="mb-6 quiz-item" data-quiz="4">
+                    <p class="font-medium mb-3">4. 亭额"惺亭"二字是由谁题写的？</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="A">
+                            <i class="far fa-circle mr-2"></i> A. 孙中山
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="B">
+                            <i class="far fa-circle mr-2"></i> B. 商承祚
+                        </div>
+                        <div class="quiz-option px-4 py-2 rounded border" data-answer="C">
+                            <i class="far fa-circle mr-2"></i> C. 康有为
+                        </div>
+                    </div>
+                    <div class="quiz-feedback mt-3 hidden text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> 正确答案：B。由古文字学家商承祚先生于1981年补书。
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quizSuccess" class="hidden bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+                    <div>
+                        <p class="font-medium text-green-700">恭喜您全部答对！</p>
+                        <p class="text-sm text-green-600 mt-1">线索：下一站线索：乙丑进士牌坊东侧</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 摩斯密码游戏 -->
+        <div class="glass-card p-6 mb-10 morse-game fade-in">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-key text-amber-600 mr-3"></i>
+                摩斯密码游戏
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">解密环节</h3>
+                    <p class="text-sm text-gray-600 mb-3">请解密以下摩斯密码："-..- / - / -.-- / .-.. / -.-- / -... / --"</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">输入解密结果:</label>
+                        <input type="text" id="decodeInput" class="w-full p-2 border rounded" placeholder="输入解密后的拼音首字母">
+                        <button onclick="checkDecode()" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交</button>
+                    </div>
+                    
+                    <div id="decodeResult" class="hidden bg-blue-50 p-3 rounded border border-blue-200">
+                        <p class="text-sm text-blue-700">解密成功！明文："惺亭英烈永不灭"</p>
+                    </div>
+                    
+                    <h3 class="text-lg font-medium mt-6 mb-2">加密环节</h3>
+                    <p class="text-sm text-gray-600 mb-3">请将"进士牌坊勉众生"转换为拼音首字母后加密为摩斯密码</p>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">输入加密结果:</label>
+                        <div class="flex space-x-2 mb-2">
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('.')">·</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('-')">-</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode('/')">/</button>
+                            <button class="morse-key px-3 py-1 border rounded" onclick="addMorseCode(' ')">空格</button>
+                            <button class="morse-key px-3 py-1 border rounded bg-red-100" onclick="clearMorseCode()">
+                                <i class="fas fa-backspace"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="encodeInput" class="w-full p-2 border rounded" placeholder="输入摩斯密码">
+                        <button onclick="checkEncode()" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交</button>
+                    </div>
+                    
+                    <div id="encodeResult" class="hidden bg-blue-50 p-3 rounded border border-blue-200">
+                        <p class="text-sm text-blue-700">加密成功！线索：完整路线：自惺亭沿中轴线西行30米</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-2">摩斯密码对照表</h3>
+                    <div class="bg-white p-3 rounded border">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="p-2 border">字母</th>
+                                    <th class="p-2 border">摩斯码</th>
+                                    <th class="p-2 border">字母</th>
+                                    <th class="p-2 border">摩斯码</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 border">A</td>
+                                    <td class="p-2 border">·-</td>
+                                   极<td class="p-2 border">N</td>
+                                    <td class="p-2 border">-·</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">B</td>
+                                    <td class="p-2 border">-···</td>
+                                    <td class="p-2 border">O</td>
+                                    <td class="p-2 border">---</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">C</td>
+                                    <td class="p-2 border">-·-·</td>
+                                    <td class="p-2 border">P</td>
+                                    <td class="p-2 border">·--·</td>
+                                </tr>
+                                <tr>
+                                    <td极 class="p-2 border">D</td>
+                                    <td class="p-2 border">-··</td>
+                                    <td class="p-2 border">Q</td>
+                                    <td class="p-2 border">--·-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">E</td>
+                                    <td class="p-2 border">·</td>
+                                    <td class="p-2 border">R</td>
+                                    <td class="p-2 border">·-·</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">F</td>
+                                    <td class="p-2 border">··-·</td>
+                                    <td class="p-2 border">S</td>
+                                    <td class="p-2 border">···</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">G</td>
+                                    <td class="p-2 border">--·</td>
+                                    <td class="p-2 border">T</td>
+                                    <极td class="p-2 border">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">H</td>
+                                    <td class="p-2 border">····</td>
+                                    <td class="p-2 border">U</td>
+                                    <td class="p-2 border">··-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">I</td>
+                                    <td class="p-2 border">··</td>
+                                    <td class="p-2 border">V</td>
+                                    <td class="p-2 border">···-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">J</td>
+                                    <td class="p-2 border">·---</td>
+                                    <td class="p-2 border">W</td>
+                                    <td class="p-2 border">·--</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">K</td>
+                                    <td class="p-2 border">-·-</td>
+                                    <td class="p-2 border">X</td>
+                                    <td class="p-2 border">-··-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">L</td>
+                                    <td class="p-2 border">·-··</td>
+                                    <td class="p-2 border">Y</td>
+                                    <td class="p-2 border">-·--</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">M</td>
+                                    <td class="p-2 border">--</td>
+                                    <td class="p-2 border">Z</td>
+                                    <td class="p-2 border">--··</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-gray-500 mt-2">提示：中文转换为拼音首字母后再对应摩斯码</极p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评论功能（已移除验证机制） -->
+        <div class="glass-card p-6 mb-10 fade-in">
+            <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-comments text-indigo-600 mr-3"></i>
+                评论互动
+            </h2>
+            
+            <div class="mb-6">
+                <textarea id="commentInput" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500" rows="4" placeholder="请留下您的评论（10-500字）"></textarea>
+                <div class="flex justify-between items-center mt-2">
+                    <span id="commentCount" class="text-xs text-gray-500">0/500</span>
+                    <button id="submitComment" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">提交评论</button>
+                </div>
+            </div>
+            
+            <div id="commentsContainer">
+                <div class="comment-card bg-white p-4 rounded-lg shadow-sm mb-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="font-medium">游客</span>
+                            <span class="text-xs text-gray-500 ml-2">广东广州</span>
+                        </div>
+                        <span class="text-xs text-gray-500">2024

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>马丁堂研学之旅 - 中山大学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f9f5e9 0%, #f5ead8 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            background: linear-gradient(135deg, #8e0000 0%, #4a0000 100%);
+            color: #fff;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            margin: 0 15px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .nav-btn.active {
+            background: #ffd700;
+            color: #8e0000;
+        }
+        
+        /* 内容区域样式 */
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+        
+        .carousel-inner {
+            width: 300%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.6s ease;
+        }
+        
+        .carousel-item {
+            width: 33.333%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .carousel-control.prev {
+            left: 20px;
+        }
+        
+        .carousel-control.next {
+            right: 20px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        .indicator.active {
+            background: #ffd700;
+        }
+        
+        /* 讲解内容样式 */
+        .intro-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .intro-header h1 {
+            font-size: 2.8rem;
+            color: #8e0000;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .intro-content {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .intro-section {
+            margin-bottom: 30px;
+        }
+        
+        .intro-section h2 {
+            color: #8e0000;
+            border-left: 5px solid #ffd700;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .intro-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffd70044 0%, #ffd70044 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .info-box {
+            background: #f8f4e9;
+            border-left: 4px solid #8e0000;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            color: #8e0000;
+            margin-bottom: 10px;
+        }
+        
+        /* 游戏区域样式 */
+        .game-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .game-header h2 {
+            font-size: 2.2rem;
+            color: #8e0000;
+            margin-bottom: 15px;
+        }
+        
+        .game-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .question-container {
+            background: rgba(142, 0, 0, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #8e0000;
+            font-weight: bold;
+        }
+        
+        .options {
+            display: grid;
+            grid-gap: 15px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid #e0d6c0;
+        }
+        
+        .option:hover {
+            background: rgba(142, 0, 0, 0.05);
+            transform: translateX(5px);
+            border-color: #8e0000;
+        }
+        
+        .correct {
+            background: rgba(0, 200, 0, 0.1);
+            border-color: #00a000;
+        }
+        
+        .incorrect {
+            background: rgba(200, 0, 0, 0.1);
+            border-color: #a00000;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            min-height: 40px;
+            font-weight: bold;
+        }
+        
+        .score-container {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 20px 0;
+        }
+        
+        .result-text {
+            font-size: 1.8rem;
+            color: #8e0000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .title-reward {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff4d4 0%, #ffe9a8 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ffd700;
+        }
+        
+        .title-reward h3 {
+            color: #8e0000;
+            margin-bottom: 10px;
+        }
+        
+        .next-station {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e9f5ff 0%, #d4ebff 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #4a7dff;
+        }
+        
+        .next-station h3 {
+            color: #004a8e;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #8e0000, #4a0000);
+            color: #fff;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 25px auto;
+            box-shadow: 0 5px 15px rgba(142, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(142, 0, 0, 0.4);
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            flex-grow: 1;
+            background: #e0d6c0;
+            border-radius: 5px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #8e0000, #4a0000);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background: linear-gradient(135deg, #8e0000 0%, #4a0000 100%);
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+                margin: 0 8px;
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+            
+            .intro-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .intro-content, .game-container {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                margin: 0 5px;
+            }
+            
+            .carousel {
+                height: 250px;
+            }
+            
+            .intro-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="nav-btn active" id="intro-btn">马丁堂讲解</button>
+            <button class="nav-btn" id="quiz-btn">知识挑战</button>
+        </div>
+    </nav>
+
+    <!-- 讲解内容区域 -->
+    <section class="content-section active" id="intro-section">
+        <!-- 轮播图 -->
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <!-- 替换为您的马丁堂图片1 -->
+                    <img src="https://placehold.co/1200x400/8e0000/white?text=马丁堂正面全景" alt="马丁堂正面全景" class="carousel-image">
+                    <div class="carousel-caption">
+                        <h3>马丁堂正面全景</h3>
+                        <p>中山大学南校园最具代表性的建筑之一</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!-- 替换为您的马丁堂图片2 -->
+                    <img src="https://placehold.co/1200x400/4a0000/white?text=马丁堂建筑细节" alt="马丁堂建筑细节" class="carousel-image">
+                    <div class="carousel-caption">
+                        <h3>马丁堂建筑细节</h3>
+                        <p>中西合璧的建筑风格，红砖绿瓦的经典设计</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!-- 替换为您的马丁堂图片3 -->
+                    <img src="https://placehold.co/1200x400/8e0000/white?text=马丁堂石狮特写" alt="马丁堂石狮特写" class="carousel-image">
+                    <div class="carousel-caption">
+                        <h3>马丁堂石狮特写</h3>
+                        <p>象征中山大学校训的五只石狮</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-indicators">
+                <div class="indicator active"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
+        </div>
+
+        <div class="intro-header">
+            <h1>马丁堂：中山大学的历史见证</h1>
+            <p>探索这座百年建筑的历史脉络与文化价值</p>
+        </div>
+
+        <div class="intro-content">
+            <div class="intro-section">
+                <h2>建筑历史</h2>
+                <p><span class="highlight">马丁堂</span>建于1905年，是中山大学南校园（康乐园）内第一座永久性建筑，也是<span class="highlight">中国第一栋钢筋混凝土混合结构建筑</span>。它得名于美国辛辛那提工业家、基督教徒亨利·马丁先生，他为岭南大学的前身格致书院捐赠了主要建设资金。</p>
+                
+                <div class="info-box">
+                    <h3>历史小知识</h3>
+                    <p>马丁堂最初作为教学楼使用，见证了岭南大学到中山大学的变迁。1912年5月，孙中山先生曾在此发表题为《非学问无以建设》的演讲，勉励师生努力学习，为国家建设贡献力量。</p>
+                </div>
+            </div>
+
+            <div class="intro-section">
+                <h2>建筑特色</h2>
+                <p>马丁堂采用<span class="highlight">红砖绿瓦</span>的建筑风格，体现了中西合璧的建筑特色。其建筑形式为西方古典主义，但屋顶采用中式绿琉璃瓦歇山顶，完美融合了东西方建筑美学。</p>
+                <p>建筑平面呈"山"字形，中间部分四层，两翼三层，建筑面积约4000平方米。其红砖墙体厚重坚固，历经百年风雨依然屹立不倒，展现了当时的建筑工艺水平。</p>
+            </div>
+
+            <div class="intro-section">
+                <h2>文化象征</h2>
+                <p>马丁堂前的五只石狮是中山大学的重要文化象征。这些石狮原为广州城隍庙前的文物，后移至马丁堂前。2014年，中山大学将它们选为吉祥物"<span class="highlight">中大狮</span>"的原型，分别对应校训"<span class="highlight">博学、审问、慎思、明辨、笃行</span>"。</p>
+                
+                <div class="info-box">
+                    <h3>校训与石狮的对应关系</h3>
+                    <p>每只石狮代表校训中的一个词语，体现了中山大学的文化精神和教育理念。这种独特的对应关系在全国高校中极为罕见，成为中山大学独特的文化标识。</p>
+                </div>
+            </div>
+
+            <div class="intro-section">
+                <h2>今日马丁堂</h2>
+                <p>如今，马丁堂主要是<span class="highlight">中山大学人类学系</span>的所在地，也是中山大学人类学博物馆的所在地。这座百年建筑依然发挥着教育功能，继续为中山大学的学术发展贡献力量。</p>
+                <p>2002年，马丁堂被列为广州市文物保护单位，成为广州近代建筑的重要代表之一。它不仅是一座建筑，更是一段历史的见证，承载着中山大学的记忆与精神。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏内容区域 -->
+    <section class="content-section" id="quiz-section">
+        <div class="game-header">
+            <h2>马丁堂知识挑战</h2>
+            <p>测试您对马丁堂的了解程度，完成挑战可获得专属称号！</p>
+        </div>
+
+        <div class="game-container">
+            <div class="progress-container">
+                <span id="progress-text">问题 1/10</span>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question" id="question">问题加载中...</div>
+                <div class="options" id="options">
+                    <div class="option" data-index="0">选项1</div>
+                    <div class="option" data-index="1">选项2</div>
+                    <div class="option" data-index="2">选项3</div>
+                    <div class="option" data-index="3">选项4</div>
+                </div>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button class="btn" id="next-btn" style="display: none;">下一题</button>
+            
+            <!-- 答题结果区域 -->
+            <div id="result-area" style="display: none;">
+                <div class="result-text" id="result-text">挑战完成！</div>
+                <div class="score-container">您的得分: <span id="score">0</span>/10</div>
+                
+                <div class="title-reward">
+                    <h3>🏆 获得称号</h3>
+                    <p id="title-text">马丁堂初学者</p>
+                </div>
+                
+                <div class="next-station">
+                    <h3>📍 下一站推荐</h3>
+                    <p>恭喜您完成马丁堂的研学挑战！接下来建议您前往<b>格兰堂</b>继续您的康乐园历史建筑探索之旅。</p>
+                    <p>格兰堂是中山大学另一座具有重要历史价值的建筑，建于1916年，与马丁堂共同见证了中山大学的发展历程。</p>
+                </div>
+                
+                <button class="btn" id="restart-btn">再玩一次</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2023 中山大学马丁堂研学之旅 | 设计用于教育目的</p>
+        </div>
+    </footer>
+
+    <script>
+        // 游戏数据
+        const questions = [
+            {
+                question: "马丁堂建于哪一年？",
+                options: ["1905年", "1912年", "1924年", "1936年"],
+                answer: 0,
+                fact: "马丁堂建于1905年，是康乐园内第一座永久性建筑，也是中国第一栋钢筋混凝土混合结构建筑。"
+            },
+            {
+                question: "马丁堂是为纪念谁而命名的？",
+                options: ["孙中山", "马丁·路德", "亨利·马丁", "爱德华·马丁"],
+                answer: 2,
+                fact: "马丁堂是为纪念美国辛辛那提工业家、基督教徒亨利·马丁先生向岭南大学的前身格致书院捐款而命名。"
+            },
+            {
+                question: "马丁堂的建筑风格主要体现了什么特色？",
+                options: ["纯中式风格", "纯西式风格", "中西合璧", "现代主义风格"],
+                answer: 2,
+                fact: "马丁堂采用红砖绿瓦的建筑风格，体现了中西合璧的建筑特色，是岭南大学时期的主要建筑之一。"
+            },
+            {
+                question: "马丁堂最初是什么用途？",
+                options: ["图书馆", "教学楼", "行政楼", "学生宿舍"],
+                answer: 1,
+                fact: "马丁堂最初作为教学楼使用，后来曾作为中山大学人类学系的所在地。"
+            },
+            {
+                question: "以下哪位名人曾在马丁堂发表演讲？",
+                options: ["孙中山", "鲁迅", "梁启超", "胡适"],
+                answer: 0,
+                fact: "1912年5月，孙中山先生曾在马丁堂发表题为《非学问无以建设》的演讲，勉励师生努力学习。"
+            },
+            {
+                question: "马丁堂前的石狮与中山大学校训有什么关系？",
+                options: ["象征五权宪法", "代表五岭山脉", "对应校训五词", "象征五羊衔谷"],
+                answer: 2,
+                fact: "马丁堂前的五只石狮分别对应中山大学校训'博学、审问、慎思、明辨、笃行'，2014年被中大选为吉祥物'中大狮'的原型。"
+            },
+            {
+                question: "马丁堂现在主要是什么系的所在地？",
+                options: ["历史系", "哲学系", "人类学系", "中文系"],
+                answer: 2,
+                fact: "马丁堂现在主要是中山大学人类学系的所在地，也是中山大学人类学博物馆的所在地。"
+            },
+            {
+                question: "马丁堂的建筑材料主要来自哪里？",
+                options: ["美国进口", "英国进口", "本地生产", "德国进口"],
+                answer: 2,
+                fact: "马丁堂的建筑材料主要是本地生产的红砖，是中国第一栋用硬制红砖建造的房屋。"
+            },
+            {
+                question: "马丁堂最初属于哪所大学？",
+                options: ["中山大学", "岭南大学", "国立广东大学", "格致书院"],
+                answer: 3,
+                fact: "马丁堂最初属于格致书院，后来成为岭南大学的主要建筑，1952年院系调整后归中山大学所有。"
+            },
+            {
+                question: "马丁堂的命名是在哪一年？",
+                options: ["1905年", "1906年", "1912年", "1924年"],
+                answer: 1,
+                fact: "马丁堂建于1905年，但在1906年才正式命名，以纪念捐款人马丁先生。"
+            }
+        ];
+
+        // 称号数据
+        const titles = [
+            { minScore: 0, maxScore: 3, title: "马丁堂初学者", desc: "刚刚开始了解这座百年建筑" },
+            { minScore: 4, maxScore: 6, title: "马丁堂探索者", desc: "对马丁堂有一定了解" },
+            { minScore: 7, maxScore: 9, title: "马丁堂学者", desc: "对马丁堂有深入的了解" },
+            { minScore: 10, maxScore: 10, title: "马丁堂专家", desc: "马丁堂知识大师！" }
+        ];
+
+        // 游戏变量
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        // DOM元素
+        const introBtn = document.getElementById('intro-btn');
+        const quizBtn = document.getElementById('quiz-btn');
+        const introSection = document.getElementById('intro-section');
+        const quizSection = document.getElementById('quiz-section');
+        
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const scoreElement = document.getElementById('score');
+        const resultTextElement = document.getElementById('result-text');
+        const progressElement = document.getElementById('progress');
+        const progressTextElement = document.getElementById('progress-text');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const resultArea = document.getElementById('result-area');
+        const titleText = document.getElementById('title-text');
+        
+        // 轮播图变量
+        let currentSlide = 0;
+        const carouselInner = document.querySelector('.carousel-inner');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.querySelector('.carousel-control.prev');
+        const nextSlideBtn = document.querySelector('.carousel-control.next');
+        
+        // 切换内容区域
+        introBtn.addEventListener('click', () => {
+            introBtn.classList.add('active');
+            quizBtn.classList.remove('active');
+            introSection.classList.add('active');
+            quizSection.classList.remove('active');
+        });
+        
+        quizBtn.addEventListener('click', () => {
+            quizBtn.classList.add('active');
+            introBtn.classList.remove('active');
+            quizSection.classList.add('active');
+            introSection.classList.remove('active');
+        });
+        
+        // 初始化游戏
+        function initGame() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            resultArea.style.display = 'none';
+            loadQuestion();
+        }
+        
+        // 加载问题
+        function loadQuestion() {
+            answered = false;
+            const question = questions[currentQuestion];
+            questionElement.textContent = question.question;
+            
+            // 清空选项
+            optionsElement.innerHTML = '';
+            
+            // 添加选项
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.setAttribute('data-index', index);
+                optionElement.addEventListener('click', selectOption);
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // 重置反馈
+            feedbackElement.textContent = '';
+            nextBtn.style.display = 'none';
+            
+            // 更新进度
+            progressTextElement.textContent = `问题 ${currentQuestion + 1}/${questions.length}`;
+            progressElement.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+        }
+        
+        // 选择选项
+        function selectOption(e) {
+            if (answered) return;
+            
+            answered = true;
+            const selectedIndex = parseInt(e.target.getAttribute('data-index'));
+            const correctIndex = questions[currentQuestion].answer;
+            
+            // 禁用所有选项
+            document.querySelectorAll('.option').forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // 显示正确答案和反馈
+            if (selectedIndex === correctIndex) {
+                e.target.classList.add('correct');
+                feedbackElement.textContent = '回答正确！';
+                feedbackElement.style.color = '#00a000';
+                score++;
+            } else {
+                e.target.classList.add('incorrect');
+                document.querySelectorAll('.option')[correctIndex].classList.add('correct');
+                feedbackElement.textContent = '回答错误！';
+                feedbackElement.style.color = '#a00000';
+            }
+            
+            // 显示下一题按钮
+            nextBtn.style.display = 'block';
+        }
+        
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                endGame();
+            }
+        }
+        
+        // 结束游戏
+        function endGame() {
+            // 更新进度条
+            progressElement.style.width = '100%';
+            
+            // 隐藏问题区域，显示结果区域
+            document.querySelector('.question-container').style.display = 'none';
+            nextBtn.style.display = 'none';
+            resultArea.style.display = 'block';
+            
+            // 更新分数和结果文本
+            scoreElement.textContent = score;
+            
+            // 根据分数确定称号
+            let userTitle = "";
+            for (let title of titles) {
+                if (score >= title.minScore && score <= title.maxScore) {
+                    userTitle = title.title;
+                    break;
+                }
+            }
+            
+            titleText.textContent = `${userTitle} - ${titles.find(t => t.title === userTitle).desc}`;
+            
+            if (score >= 8) {
+                resultTextElement.textContent = '太棒了！您是马丁堂历史专家！';
+            } else if (score >= 5) {
+                resultTextElement.textContent = '不错！您对马丁堂有很好的了解！';
+            } else {
+                resultTextElement.textContent = '需要更多了解马丁堂的历史哦！';
+            }
+        }
+        
+        // 轮播图功能
+        function showSlide(index) {
+            if (index < 0) index = 2;
+            if (index > 2) index = 0;
+            
+            currentSlide = index;
+            carouselInner.style.transform = `translateX(-${index * 33.333}%)`;
+            
+            // 更新指示器
+            indicators.forEach((indicator, i) => {
+                if (i === index) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        // 轮播图事件监听
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+        
+        nextSlideBtn.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+        
+        // 指示器点击事件
+        indicators.forEach((indicator, i) => {
+            indicator.addEventListener('click', () => {
+                showSlide(i);
+            });
+        });
+        
+        // 自动轮播
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // 游戏事件监听
+        nextBtn.addEventListener('click', nextQuestion);
+        
+        restartBtn.addEventListener('click', () => {
+            document.querySelector('.question-container').style.display = 'block';
+            initGame();
+        });
+        
+        // 初始显示第一张轮播图和第一个问题
+        showSlide(0);
+        initGame();
+    </script>
+</body>
+</html>

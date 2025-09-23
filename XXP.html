@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中山大学南校园校训研学之旅</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #f9f2e3 0%, #e8d9c0 100%);
+            color: #5e371b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 253, 245, 0.95);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(to right, #9e0000, #cc0000);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            padding: 18px 30px;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: white;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        /* 页面内容区域 */
+        .page {
+            display: none;
+            padding: 30px;
+            min-height: 600px;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* 标题样式 */
+        h1 {
+            color: #9e0000;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #9e0000, #cc0000);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            color: #9e0000;
+            margin: 25px 0 15px;
+            border-left: 5px solid #cc0000;
+            padding-left: 15px;
+        }
+        
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .carousel-control.prev {
+            left: 20px;
+        }
+        
+        .carousel-control.next {
+            right: 20px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .carousel-indicator.active {
+            background: white;
+        }
+        
+        /* 讲解内容样式 */
+        .lecture-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+        }
+        
+        .lecture-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(204,0,0,0.1) 0%, rgba(204,0,0,0.2) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #cc0000;
+            margin: 25px 0;
+        }
+        
+        /* 游戏区域样式 */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+            max-width: 800px;
+        }
+        
+        .card {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #cc0000 0%, #9e0000 100%);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #f8f0dc 0%, #e8d9c0 100%);
+            color: #5e371b;
+        }
+        
+        .card.matched {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            transform: scale(0.95);
+            box-shadow: 0 3px 10px rgba(46, 125, 50, 0.3);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        
+        .timer, .score {
+            background: #f8f0dc;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #9e0000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn {
+            background: #cc0000;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background: #9e0000;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 答题区域样式 */
+        .quiz-container {
+            position: relative;
+        }
+        
+        .quiz-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .password-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #cc0000;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .quiz-content {
+            display: none;
+        }
+        
+        .quiz-timer {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #9e0000;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f0dc;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            padding: 18px;
+            background: #f8f0dc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background: #e8d9c0;
+            transform: translateY(-2px);
+        }
+        
+        .option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #2e7d32;
+        }
+        
+        .option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #c62828;
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .submit-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+        }
+        
+        .completion {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .certificate {
+            background: #f8f0dc;
+            padding: 40px;
+            border: 15px solid #cc0000;
+            border-radius: 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 700px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .certificate h2 {
+            color: #9e0000;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+        }
+        
+        .title {
+            color: #9e0000;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(204, 0, 0, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .next-station {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #9e0000 0%, #cc0000 100%);
+            color: white;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .memory-game {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .memory-game {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card {
+                width: 100px;
+                height: 100px;
+                font-size: 1.1rem;
+            }
+            
+            .carousel {
+                height: 250px;
+            }
+            
+            .page {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <button class="nav-btn active" data-page="lecture">校训讲解</button>
+            <button class="nav-btn" data-page="game">记忆挑战</button>
+            <button class="nav-btn" data-page="quiz">答题闯关</button>
+        </nav>
+        
+        <!-- 校训讲解页面 -->
+        <div id="lecture" class="page active">
+            <h1>中山大学南校园校训牌讲解</h1>
+            
+            <!-- 轮播图 -->
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <!-- 轮播项1 -->
+                    <div class="carousel-item active" style="background-image: url('https://placekitten.com/1200/600');">
+                        <div class="carousel-caption">
+                            <h3>中山大学南校园校训牌</h3>
+                            <p>孙中山先生亲笔题写的"博学、审问、慎思、明辨、笃行"校训</p>
+                        </div>
+                    </div>
+                    <!-- 轮播项2 -->
+                    <div class="carousel-item" style="background-image: url('https://placekitten.com/1200/601');">
+                        <div class="carousel-caption">
+                            <h3>校训牌历史</h3>
+                            <p>校训牌位于中山大学南校园中轴线上的重要位置</p>
+                        </div>
+                    </div>
+                    <!-- 轮播项3 -->
+                    <div class="carousel-item" style="background-image: url('https://placekitten.com/1200/602');">
+                        <div class="carousel-caption">
+                            <h3>校训内涵</h3>
+                            <p>校训源自《中庸》，体现了中山大学的办学理念</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 轮播控制按钮 -->
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+                
+                <!-- 轮播指示器 -->
+                <div class="carousel-indicators">
+                    <button class="carousel-indicator active"></button>
+                    <button class="carousel-indicator"></button>
+                    <button class="carousel-indicator"></button>
+                </div>
+            </div>
+            
+            <!-- 讲解内容 -->
+            <div class="lecture-content">
+                <h2>校训的历史渊源</h2>
+                <p>中山大学的校训"博学、审问、慎思、明辨、笃行"源自《礼记·中庸》第十九章，是孙中山先生于1924年创办广东大学（中山大学前身）时亲笔题写的。这十个字凝练了中国传统文化中对学问与修行的高度概括，体现了中山先生对学子们的殷切期望。</p>
+                
+                <div class="highlight">
+                    <p>校训牌位于中山大学南校园的中轴线上，与怀士堂、黑石屋等历史建筑共同构成了康乐园的核心文化景观。校训牌采用优质花岗岩制成，庄重典雅，与周围的红砖绿瓦相得益彰，成为中山大学精神象征的重要载体。</p>
+                </div>
+                
+                <h2>校训的深刻内涵</h2>
+                <p>校训的五个方面构成了一个完整的求知与践行过程：</p>
+                
+                <h2>博学</h2>
+                <p>意为广泛地学习，涉猎各种知识。中山先生希望学生不仅精通专业知识，还要具备广博的文化素养，成为全面发展的人才。</p>
+                
+                <h2>审问</h2>
+                <p>意为详尽地探究，对所学知识提出疑问。这表明学习不是被动接受，而是主动探索，要有批判精神和求真态度。</p>
+                
+                <h2>慎思</h2>
+                <p>意为谨慎地思考，对所学内容进行深入思考。这是将外部知识内化为自身智慧的关键环节。</p>
+                
+                <h2>明辨</h2>
+                <p>意为明晰地辨别，形成自己的判断力。在信息纷繁复杂的时代，这种能力尤为重要。</p>
+                
+                <h2>笃行</h2>
+                <p>意为切实地实行，将所学知识付诸实践。这是校训的最终落脚点，体现了中山先生"知行合一"的教育理念。</p>
+                
+                <div class="highlight">
+                    <p>校训牌不仅是中山大学的象征，更是每一位中大人的精神指引。它提醒着师生要恪守学术规范，追求真理，服务社会，践行中山先生"天下为公"的理想。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 记忆游戏页面 -->
+        <div id="game" class="page">
+            <h1>校训记忆挑战</h1>
+            
+            <div class="game-container">
+                <div class="game-info">
+                    <div class="timer" id="game-timer">时间: 00:00</div>
+                    <div class="score" id="score">已匹配: 0/5</div>
+                </div>
+                
+                <div class="memory-game" id="memory-game">
+                    <!-- 游戏卡片将由JavaScript动态生成 -->
+                </div>
+                
+                <button class="btn" id="start-btn">开始游戏</button>
+                
+                <div class="completion" id="game-completion">
+                    <div class="certificate">
+                        <h2>校训记忆挑战完成证书</h2>
+                        <p>恭喜 <span id="player-name">参与者</span> 成功完成校训记忆挑战！</p>
+                        <p>用时: <span id="completion-time">00:00</span></p>
+                        <p>您已展现出对中山大学校训"博学、审问、慎思、明辨、笃行"的理解</p>
+                        <div class="title">校训传承者</div>
+                        <p>您的解锁密码是: <span id="password">9826</span></p>
+                        <p>请使用此密码开启答题闯关环节</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 答题闯关页面 -->
+        <div id="quiz" class="page">
+            <h1>校训知识闯关</h1>
+            
+            <div class="quiz-container">
+                <!-- 密码覆盖层 -->
+                <div class="quiz-overlay" id="quiz-overlay">
+                    <div class="password-form">
+                        <h2>请输入解锁密码</h2>
+                        <p>密码需完成校训记忆挑战后获得</p>
+                        <input type="password" class="password-input" id="password-input" placeholder="输入4位密码">
+                        <button class="btn" id="submit-password">提交密码</button>
+                        <p id="password-error" style="color: #ff6b6b; margin-top: 15px; display: none;">密码错误，请重新输入</p>
+                    </div>
+                </div>
+                
+                <!-- 答题内容 -->
+                <div class="quiz-content" id="quiz-content">
+                    <div class="quiz-timer" id="quiz-timer">剩余时间: 05:00</div>
+                    
+                    <div class="question" id="question-1">
+                        <h2>问题 1/5</h2>
+                        <p>中山大学校训"博学、审问、慎思、明辨、笃行"源自哪部经典著作？</p>
+                        <div class="options">
+                            <div class="option" data-correct="true">《中庸》</div>
+                            <div class="option">《大学》</div>
+                            <div class="option">《论语》</div>
+                            <div class="option">《孟子》</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析:</strong> 中山大学校训源自《礼记·中庸》第十九章，原文为"博学之，审问之，慎思之，明辨之，笃行之"。
+                        </div>
+                    </div>
+                    
+                    <div class="question" id="question-2">
+                        <h2>问题 2/5</h2>
+                        <p>孙中山先生于哪年创办广东大学（中山大学前身）并亲笔题写校训？</p>
+                        <div class="options">
+                            <div class="option">1911年</div>
+                            <div class="option" data-correct="true">1924年</div>
+                            <div class="option">1937年</div>
+                            <div class="option">1949年</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析:</strong> 孙中山先生于1924年创办广东大学，并亲笔题写校训。学校后来为纪念孙中山先生，改名为中山大学。
+                        </div>
+                    </div>
+                    
+                    <div class="question" id="question-3">
+                        <h2>问题 3/5</h2>
+                        <p>校训中的"笃行"强调的是？</p>
+                        <div class="options">
+                            <div class="option">广泛学习</div>
+                            <div class="option">谨慎思考</div>
+                            <div class="option">明确辨别</div>
+                            <div class="option" data-correct="true">切实实行</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析:</strong> "笃行"是指将所学知识切实地付诸实践，是校训的最终落脚点，体现了"知行合一"的理念。
+                        </div>
+                    </div>
+                    
+                    <div class="question" id="question-4">
+                        <h2>问题 4/5</h2>
+                        <p>中山大学南校园校训牌位于什么地方？</p>
+                        <div class="options">
+                            <div class="option">北门广场</div>
+                            <div class="option" data-correct="true">校园中轴线</div>
+                            <div class="option">图书馆前</div>
+                            <div class="option">怀士堂后方</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析:</strong> 校训牌位于中山大学南校园的中轴线上，与怀士堂、黑石屋等历史建筑共同构成了康乐园的核心文化景观。
+                        </div>
+                    </div>
+                    
+                    <div class="question" id="question-5">
+                        <h2>问题 5/5</h2>
+                        <p>下列哪项不是校训"审问"所强调的？</p>
+                        <div class="options">
+                            <div class="option">对所学知识提出疑问</div>
+                            <div class="option">主动探索</div>
+                            <div class="option">求真态度</div>
+                            <div class="option" data-correct="true">盲目接受</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析:</strong> "审问"强调对所学知识提出疑问，具有批判精神和求真态度，而不是盲目接受。
+                        </div>
+                    </div>
+                    
+                    <button class="btn submit-btn" id="submit-quiz">提交答案</button>
+                    
+                    <div class="completion" id="quiz-completion">
+                        <div class="certificate">
+                            <h2>答题闯关完成证书</h2>
+                            <p>恭喜 <span id="quiz-player-name">参与者</span> 成功完成校训知识闯关！</p>
+                            <p>得分: <span id="quiz-score">5</span>/5</p>
+                            <p>您展现了对中山大学校训的深刻理解</p>
+                            <div class="title" id="quiz-title">校训守护者</div>
+                        </div>
+                        
+                        <div class="next-station">
+                            <h2>下一站：怀士堂</h2>
+                            <p>请前往中山大学南校园的怀士堂继续您的研学之旅</p>
+                            <p>怀士堂是中山大学的历史建筑之一，孙中山先生曾在此发表重要演讲</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 中山大学南校园 | 校训研学之旅</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面切换功能
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetPage = button.dataset.page;
+                
+                // 更新导航按钮状态
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                // 显示目标页面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(targetPage).classList.add('active');
+            });
+        });
+        
+        // 轮播图功能
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        function showSlide(index) {
+            // 隐藏所有幻灯片
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            // 显示指定幻灯片
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlide = index;
+        }
+        
+        // 下一张幻灯片
+        document.querySelector('.carousel-control.next').addEventListener('click', () => {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        });
+        
+        // 上一张幻灯片
+        document.querySelector('.carousel-control.prev').addEventListener('click', () => {
+            let prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prevSlide);
+        });
+        
+        // 指示器点击事件
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // 自动轮播
+        setInterval(() => {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        }, 5000);
+        
+        // 游戏数据 - 校训词条和解释
+        const cardData = [
+            { word: "博学", meaning: "广泛地学习", matched: false },
+            { word: "审问", meaning: "详细地询问", matched: false },
+            { word: "慎思", meaning: "谨慎地思考", matched: false },
+            { word: "明辨", meaning: "清楚地分辨", matched: false },
+            { word: "笃行", meaning: "切实地实行", matched: false }
+        ];
+        
+        let gameStarted = false;
+        let gameStartTime = null;
+        let gameTimerInterval = null;
+        let flippedCards = [];
+        let matchedPairs = 0;
+        
+        // 初始化游戏
+        function initGame() {
+            const gameContainer = document.getElementById('memory-game');
+            gameContainer.innerHTML = '';
+            
+            // 创建所有卡片
+            let allCards = [];
+            
+            // 添加校训词条卡片
+            cardData.forEach((item, index) => {
+                allCards.push({
+                    id: index * 2,
+                    type: 'word',
+                    content: item.word,
+                    matched: false
+                });
+            });
+            
+            // 添加解释卡片
+            cardData.forEach((item, index) => {
+                allCards.push({
+                    id: index * 2 + 1,
+                    type: 'meaning',
+                    content: item.meaning,
+                    matched: false
+                });
+            });
+            
+            // 随机洗牌
+            allCards = shuffleArray(allCards);
+            
+            // 创建卡片元素
+            allCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.id = card.id;
+                cardElement.dataset.type = card.type;
+                cardElement.dataset.content = card.content;
+                cardElement.innerHTML = '<div class="card-content">?</div>';
+                
+                cardElement.addEventListener('click', () => {
+                    if (!gameStarted) return;
+                    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
+                    if (flippedCards.length >= 2) return;
+                    
+                    flipCard(cardElement);
+                });
+                
+                gameContainer.appendChild(cardElement);
+            });
+        }
+        
+        // 洗牌算法
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // 翻转卡片
+        function flipCard(cardElement) {
+            cardElement.classList.add('flipped');
+            cardElement.innerHTML = `<div class="card-content">${cardElement.dataset.content}</div>`;
+            
+            flippedCards.push(cardElement);
+            
+            if (flippedCards.length === 2) {
+                checkForMatch();
+            }
+        }
+        
+        // 检查是否匹配
+        function checkForMatch() {
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+            
+            // 获取对应的内容索引
+            const content1 = card1.dataset.content;
+            const content2 = card2.dataset.content;
+            
+            // 检查是否匹配
+            let isMatch = false;
+            
+            cardData.forEach(item => {
+                if ((item.word === content1 && item.meaning === content2) || 
+                    (item.word === content2 && item.meaning === content1)) {
+                    isMatch = true;
+                }
+            });
+            
+            if (isMatch) {
+                // 匹配成功
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                
+                // 更新分数
+                document.getElementById('score').textContent = `已匹配: ${matchedPairs}/5`;
+                
+                // 检查游戏是否完成
+                if (matchedPairs === cardData.length) {
+                    completeGame();
+                }
+                
+                flippedCards = [];
+            } else {
+                // 不匹配，翻回
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.innerHTML = '<div class="card-content">?</div>';
+                    card2.innerHTML = '<div class="card-content">?</div>';
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+        
+        // 开始游戏
+        function startGame() {
+            gameStarted = true;
+            gameStartTime = new Date();
+            matchedPairs = 0;
+            
+            // 更新分数显示
+            document.getElementById('score').textContent = `已匹配: 0/5`;
+            
+            // 隐藏开始按钮
+            document.getElementById('start-btn').style.display = 'none';
+            
+            // 开始计时
+            gameTimerInterval = setInterval(updateGameTimer, 1000);
+            
+            // 初始化游戏
+            initGame();
+        }
+        
+        // 更新游戏计时器
+        function updateGameTimer() {
+            if (!gameStartTime) return;
+            
+            const currentTime = new Date();
+            const elapsedTime = Math.floor((currentTime - gameStartTime) / 1000);
+            
+            const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+            const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+            
+            document.getElementById('game-timer').textContent = `时间: ${minutes}:${seconds}`;
+        }
+        
+        // 完成游戏
+        function completeGame() {
+            clearInterval(gameTimerInterval);
+            
+            // 计算用时
+            const endTime = new Date();
+            const elapsedTime = Math.floor((endTime - gameStartTime) / 1000);
+            const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+            const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+            
+            // 显示完成界面
+            document.getElementById('completion-time').textContent = `${minutes}:${seconds}`;
+            document.getElementById('game-completion').style.display = 'block';
+            
+            // 尝试获取玩家姓名
+            setTimeout(() => {
+                const playerName = prompt("恭喜您完成游戏！请输入您的姓名：");
+                if (playerName) {
+                    document.getElementById('player-name').textContent = playerName;
+                }
+            }, 500);
+        }
+        
+        // 添加开始按钮事件监听
+        document.getElementById('start-btn').addEventListener('click', startGame);
+        
+        // 答题功能
+        let quizTimeLeft = 5 * 60; // 5分钟
+        let quizTimerInterval = null;
+        let quizScore = 0;
+        const correctPassword = "9826"; // 游戏完成后显示的密码
+        
+        // 密码提交功能
+        document.getElementById('submit-password').addEventListener('click', () => {
+            const inputPassword = document.getElementById('password-input').value;
+            const errorElement = document.getElementById('password-error');
+            
+            if (inputPassword === correctPassword) {
+                // 密码正确，开始答题
+                document.getElementById('quiz-overlay').style.display = 'none';
+                document.getElementById('quiz-content').style.display = 'block';
+                startQuiz();
+            } else {
+                // 密码错误
+                errorElement.style.display = 'block';
+            }
+        });
+        
+        // 开始答题
+        function startQuiz() {
+            // 初始化答题状态
+            quizScore = 0;
+            quizTimeLeft = 5 * 60;
+            updateQuizTimer();
+            
+            // 重置所有问题状态
+            document.querySelectorAll('.question').forEach(question => {
+                question.style.display = 'block';
+                question.querySelectorAll('.option').forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                });
+                question.querySelector('.explanation').style.display = 'none';
+            });
+            
+            // 隐藏完成界面
+            document.getElementById('quiz-completion').style.display = 'none';
+            
+            // 启动计时器
+            quizTimerInterval = setInterval(() => {
+                quizTimeLeft--;
+                updateQuizTimer();
+                
+                if (quizTimeLeft <= 0) {
+                    clearInterval(quizTimerInterval);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+        
+        // 更新答题计时器
+        function updateQuizTimer() {
+            const minutes = Math.floor(quizTimeLeft / 60).toString().padStart(2, '0');
+            const seconds = (quizTimeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('quiz-timer').textContent = `剩余时间: ${minutes}:${seconds}`;
+            
+            // 时间不足时改变颜色
+            if (quizTimeLeft < 60) {
+                document.getElementById('quiz-timer').style.color = '#f44336';
+            }
+        }
+        
+        // 选项点击事件
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // 如果已经回答过，不再处理
+                if (this.classList.contains('correct') || this.classList.contains('incorrect')) {
+                    return;
+                }
+                
+                const isCorrect = this.dataset.correct === 'true';
+                const question = this.closest('.question');
+                
+                // 标记正确答案和错误答案
+                if (isCorrect) {
+                    this.classList.add('correct');
+                    quizScore++;
+                } else {
+                    this.classList.add('incorrect');
+                    
+                    // 标记正确答案
+                    question.querySelector('.option[data-correct="true"]').classList.add('correct');
+                }
+                
+                // 显示解析
+                question.querySelector('.explanation').style.display = 'block';
+                
+                // 延迟后自动下一题或提交
+                setTimeout(() => {
+                    const nextQuestion = question.nextElementSibling;
+                    if (nextQuestion && nextQuestion.classList.contains('question')) {
+                        question.style.display = 'none';
+                        nextQuestion.style.display = 'block';
+                    } else {
+                        submitQuiz();
+                    }
+                }, 2000);
+            });
+        });
+        
+        // 提交答题
+        function submitQuiz() {
+            clearInterval(quizTimerInterval);
+            
+            // 计算得分
+            document.getElementById('quiz-score').textContent = quizScore;
+            
+            // 根据得分设置称号
+            let title = "";
+            if (quizScore >= 4) {
+                title = "校训大师";
+            } else if (quizScore >= 2) {
+                title = "校训学者";
+            } else {
+                title = "校训初学者";
+            }
+            document.getElementById('quiz-title').textContent = title;
+            
+            // 显示完成界面
+            document.getElementById('quiz-completion').style.display = 'block';
+            
+            // 尝试获取玩家姓名
+            const playerName = prompt("恭喜您完成答题！请输入您的姓名：");
+            if (playerName) {
+                document.getElementById('quiz-player-name').textContent = playerName;
+            }
+        }
+        
+        // 提交按钮事件
+        document.getElementById('submit-quiz').addEventListener('click', submitQuiz);
+        
+        // 初始隐藏游戏完成界面
+        document.getElementById('game-completion').style.display = 'none';
+    </script>
+</body>
+</html>

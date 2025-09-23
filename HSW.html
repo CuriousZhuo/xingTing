@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中大探秘 - 黑石屋时光之旅</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --sysu-red: #a62029;
+            --sysu-green: #006c4f;
+            --sysu-dark-red: #8a1a22;
+            --sysu-light-green: #00886c;
+            --sysu-beige: #f8f6f2;
+            --sysu-light-beige: #fcfaf7;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, var(--sysu-beige) 0%, #e6e2d6 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 3px solid var(--sysu-red);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--sysu-red) 0%, var(--sysu-dark-red) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><text x="50%" y="50%" font-size="50" text-anchor="middle" dominant-baseline="middle" fill="white">中大</text></svg>');
+            background-repeat: repeat;
+            opacity: 0.1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tab {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 30px;
+            border-radius: 30px 30px 0 0;
+            cursor: pointer;
+            margin: 0 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: var(--sysu-light-beige);
+            color: var(--sysu-red);
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section {
+            padding: 30px;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            height: 400px;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .carousel-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .carousel-control.prev {
+            left: 20px;
+        }
+        
+        .carousel-control.next {
+            right: 20px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .carousel-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .carousel-indicator.active {
+            background: white;
+        }
+        
+        /* 游戏内容样式 */
+        .intro {
+            text-align: center;
+            padding: 25px;
+            background: var(--sysu-light-beige);
+            border-radius: 15px;
+            border-left: 5px solid var(--sysu-green);
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .building-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .building-image {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(45deg, #d9cfbc, #ebe6d8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            font-style: italic;
+        }
+        
+        .building-info {
+            flex: 2;
+            min-width: 300px;
+            padding: 25px;
+            background: var(--sysu-light-beige);
+            border-radius: 15px;
+            border: 1px solid #ddd;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .interactive-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0dcc9;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--sysu-green) 0%, var(--sysu-light-green) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .btn {
+            background: var(--sysu-red);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(166, 32, 41, 0.3);
+        }
+        
+        .btn:hover {
+            background: var(--sysu-dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(166, 32, 41, 0.4);
+        }
+        
+        .quiz-option {
+            background: #f0ede5;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background: #e0dcc9;
+            transform: translateX(5px);
+        }
+        
+        .timeline {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 25px 15px;
+            scrollbar-width: thin;
+        }
+        
+        .timeline-event {
+            min-width: 280px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0dcc9;
+            transition: transform 0.3s;
+        }
+        
+        .timeline-event:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timeline-year {
+            background: var(--sysu-red);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+        }
+        
+        /* 答题部分样式 */
+        .quiz-container {
+            position: relative;
+        }
+        
+        .quiz-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .password-form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .password-input {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--sysu-red);
+            font-size: 1.1rem;
+            width: 300px;
+            text-align: center;
+        }
+        
+        .timer {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--sysu-red);
+            background: #f8f6f2;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--sysu-green);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: #f8f6f2;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: #e6e2d6;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .submit-btn {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--sysu-green) 0%, var(--sysu-light-green) 100%);
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .next-station {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--sysu-light-beige);
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0dcc9;
+        }
+        
+        .highlight {
+            color: var(--sysu-red);
+            font-weight: bold;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .building-display {
+                flex-direction: column;
+            }
+            
+            .interactive-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+            
+            .password-input {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>中大探秘 - 黑石屋时光之旅</h1>
+            <div class="subtitle">探索中山大学南校园的历史瑰宝，解锁知识闯关</div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="game">建筑探索</div>
+                <div class="tab" data-tab="quiz">知识闯关</div>
+            </div>
+        </header>
+        
+        <div class="content-section">
+            <!-- 游戏探索内容 -->
+            <div class="content active" id="game-content">
+                <!-- 轮播图 -->
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="background-color: #a62029;">
+                            <!-- 替换为实际图片：background-image: url('您的图片1路径'); -->
+                            <span>黑石屋外观</span>
+                        </div>
+                        <div class="carousel-item" style="background-color: #006c4f;">
+                            <!-- 替换为实际图片：background-image: url('您的图片2路径'); -->
+                            <span>历史人物介绍</span>
+                        </div>
+                        <div class="carousel-item" style="background-color: #8a1a22;">
+                            <!-- 替换为实际图片：background-image: url('您的图片3路径'); -->
+                            <span>建筑细节展示</span>
+                        </div>
+                    </div>
+                    <div class="carousel-control prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="carousel-control next">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="carousel-indicators">
+                        <div class="carousel-indicator active" data-index="0"></div>
+                        <div class="carousel-indicator" data-index="1"></div>
+                        <div class="carousel-indicator" data-index="2"></div>
+                    </div>
+                </div>
+                
+                <div class="intro">
+                    <p>欢迎来到中山大学南校园的<span class="highlight">黑石屋</span>！这座历史建筑见证了中大的发展历程。在接下来的几分钟里，您将通过互动游戏了解它的故事。</p>
+                    <p>完成探索后，您将获得密码，解锁知识闯关环节！</p>
+                </div>
+                
+                <div class="building-display">
+                    <div class="building-image">
+                        <!-- 替换为实际图片 -->
+                        <p>[黑石屋全景图片]</p>
+                    </div>
+                    <div class="building-info">
+                        <h2>黑石屋简介</h2>
+                        <p>黑石屋始建于1914年，由美国芝加哥的伊莎贝·黑石夫人捐资兴建，是中山大学南校园具有代表性的历史建筑之一。</p>
+                        <p>建筑风格中西合璧，既有岭南特色的红砖绿瓦，又融合了西方建筑元素，现用作中山大学的贵宾接待室。</p>
+                        <p>完成下方探索任务，获取知识闯关密码！</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-section">
+                    <div class="game-card">
+                        <div class="card-header">建筑探索</div>
+                        <div class="card-content">
+                            <p>点击探索黑石屋的建筑特色：</p>
+                            <div class="quiz-option" onclick="revealInfo('feature1')">∟ 形平面布局</div>
+                            <div class="quiz-option" onclick="revealInfo('feature2')">红砖墙体与绿色琉璃瓦</div>
+                            <div class="quiz-option" onclick="revealInfo('feature3')">内部美式风格设计</div>
+                            <div id="feature-info" style="margin-top: 15px; display: none;">
+                                <p class="highlight">您发现了：<span id="feature-name"></span></p>
+                                <p id="feature-desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="card-header">历史人物匹配</div>
+                        <div class="card-content">
+                            <p>将人物与他们在黑石屋的历史联系起来：</p>
+                            <div class="quiz-option" onclick="matchPerson('person1')">钟荣光</div>
+                            <div class="quiz-option" onclick="matchPerson('person2')">宋庆龄</div>
+                            <div class="quiz-option" onclick="matchPerson('person3')">孙中山</div>
+                            <div id="person-info" style="margin-top: 15px; display: none;">
+                                <p class="highlight">历史联系：<span id="person-name"></span></p>
+                                <p id="person-desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="card-header">时间轴探索</div>
+                        <div class="card-content">
+                            <p>滑动浏览黑石屋的历史事件：</p>
+                            <div class="timeline">
+                                <div class="timeline-event">
+                                    <div class="timeline-year">1914年</div>
+                                    <div class="timeline-content">黑石屋由美国芝加哥伊莎贝·黑石夫人捐资兴建</div>
+                                </div>
+                                <div class="timeline-event">
+                                    <div class="timeline-year">1922年</div>
+                                    <div class="timeline-content">宋庆龄曾在此躲避陈炯明叛变危机</div>
+                                </div>
+                                <div class="timeline-event">
+                                    <div class="timeline-year">2002年</div>
+                                    <div class="timeline-content">被列为广东省文物保护单位</div>
+                                </div>
+                                <div class="timeline-event">
+                                    <div class="timeline-year">现今</div>
+                                    <div class="timeline-content">作为中山大学贵宾接待室使用</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <div class="btn" onclick="completeGame()">完成探索</div>
+                </div>
+                
+                <div id="password-section" style="display: none; text-align: center; margin-top: 30px; padding: 20px; background: #f0ede5; border-radius: 10px;">
+                    <h3>恭喜您完成探索！</h3>
+                    <p>您的知识闯关密码是：<span class="highlight" id="game-password">ZS1922</span></p>
+                    <p>请使用此密码解锁知识闯关环节</p>
+                </div>
+            </div>
+            
+            <!-- 知识闯关内容 -->
+            <div class="content" id="quiz-content">
+                <div class="quiz-container">
+                    <div class="quiz-lock" id="quiz-lock">
+                        <div class="lock-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>知识闯关已锁定</h3>
+                        <p>请先完成建筑探索环节以获取访问密码</p>
+                        <div class="password-form">
+                            <input type="text" class="password-input" id="password-input" placeholder="请输入解锁密码">
+                            <button class="btn" onclick="unlockQuiz()">解锁闯关</button>
+                        </div>
+                    </div>
+                    
+                    <h2 style="text-align: center; margin-bottom: 20px;">黑石屋知识闯关</h2>
+                    <div class="timer" id="timer">05:00</div>
+                    
+                    <div class="question">
+                        <h3>1. 黑石屋建于哪一年？</h3>
+                        <div class="options">
+                            <div class="option" data-correct="true">A. 1914年</div>
+                            <div class="option">B. 1922年</div>
+                            <div class="option">C. 1930年</div>
+                            <div class="option">D. 1945年</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析：</strong>黑石屋建于1914年，由美国芝加哥的伊莎贝·黑石夫人捐资兴建。
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>2. 哪位历史人物曾在黑石屋避难？</h3>
+                        <div class="options">
+                            <div class="option">A. 孙中山</div>
+                            <div class="option" data-correct="true">B. 宋庆龄</div>
+                            <div class="option">C. 蒋介石</div>
+                            <div class="option">D. 陈寅恪</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析：</strong>1922年陈炯明叛变时，宋庆龄曾在此避难。
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>3. 黑石屋的建筑风格是什么？</h3>
+                        <div class="options">
+                            <div class="option">A. 纯中式风格</div>
+                            <div class="option">B. 纯西式风格</div>
+                            <div class="option" data-correct="true">C. 中西合璧</div>
+                            <div class="option">D. 现代主义风格</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析：</strong>黑石屋建筑风格中西合璧，既有岭南特色的红砖绿瓦，又融合了西方建筑元素。
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>4. 黑石屋现在的主要用途是什么？</h3>
+                        <div class="options">
+                            <div class="option">A. 学生宿舍</div>
+                            <div class="option">B. 教学楼</div>
+                            <div class="option">C. 校史博物馆</div>
+                            <div class="option" data-correct="true">D. 贵宾接待室</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析：</strong>黑石屋现用作中山大学的贵宾接待室，接待重要来宾。
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>5. 黑石屋是由谁捐资兴建的？</h3>
+                        <div class="options">
+                            <div class="option">A. 亨利·马丁</div>
+                            <div class="option">B. 岭南大学校友</div>
+                            <div class="option" data-correct="true">C. 伊莎贝·黑石夫人</div>
+                            <div class="option">D. 孙中山</div>
+                        </div>
+                        <div class="explanation">
+                            <strong>解析：</strong>黑石屋由美国芝加哥的伊莎贝·黑石夫人捐资兴建。
+                        </div>
+                    </div>
+                    
+                    <div class="submit-btn">
+                        <button class="btn" onclick="submitQuiz()">提交答案</button>
+                    </div>
+                    
+                    <div class="result" id="quiz-result">
+                        <div class="title" id="title">黑石屋探索专家</div>
+                        <p>恭喜您完成知识闯关！您的得分是：<span id="score">0</span>/5</p>
+                        <div class="next-station">
+                            <p>下一站请前往：<strong>马丁堂</strong></p>
+                            <p>马丁堂是中山大学最古老的建筑之一，拥有丰富的历史文化价值等待您去探索！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 中山大学历史探索项目 | 设计用于教育与文化传播</p>
+        </footer>
+    </div>
+
+    <script>
+        // 切换选项卡
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+            });
+        });
+        
+        // 轮播图功能
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlide = index;
+        }
+        
+        document.querySelector('.carousel-control.prev').addEventListener('click', () => {
+            let newIndex = currentSlide - 1;
+            if (newIndex < 0) newIndex = slides.length - 1;
+            showSlide(newIndex);
+        });
+        
+        document.querySelector('.carousel-control.next').addEventListener('click', () => {
+            let newIndex = currentSlide + 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            showSlide(newIndex);
+        });
+        
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                showSlide(parseInt(indicator.dataset.index));
+            });
+        });
+        
+        // 自动轮播
+        setInterval(() => {
+            let newIndex = currentSlide + 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            showSlide(newIndex);
+        }, 5000);
+        
+        // 建筑特色信息
+        const features = {
+            feature1: {
+                name: "∟ 形平面布局",
+                desc: "黑石屋采用独特的∟形平面布局，这种设计既适应了地形，又创造了丰富的室内外空间关系，是中西建筑理念融合的体现。"
+            },
+            feature2: {
+                name: "红砖墙体与绿色琉璃瓦",
+                desc: "建筑采用红砖墙体与绿色琉璃瓦的组合，这是康乐园早期建筑的典型特征，红绿配色形成了鲜明的视觉对比，极具岭南特色。"
+            },
+            feature3: {
+                name: "内部美式风格设计",
+                desc: "虽然外观具有中国特色，但内部设计采用了美式风格，包括壁炉、螺旋楼梯等西式元素，体现了中西合璧的建筑思想。"
+            }
+        };
+        
+        // 历史人物信息
+        const persons = {
+            person1: {
+                name: "钟荣光",
+                desc: "钟荣光是岭南大学首位华人校长，曾居住于黑石屋。他在这里接待过许多中外知名人士，推动了岭南大学的发展。"
+            },
+            person2: {
+                name: "宋庆龄",
+                desc: "1922年陈炯明叛变时，宋庆龄曾在此避难。这段历史使黑石屋成为了中国革命历史的重要见证地。"
+            },
+            person3: {
+                name: "孙中山",
+                desc: "孙中山曾多次到访黑石屋，与岭南大学同仁共商国是，此处成为他革命活动的一个重要场所。"
+            }
+        };
+        
+        // 显示建筑特色信息
+        function revealInfo(featureId) {
+            const feature = features[featureId];
+            document.getElementById('feature-name').textContent = feature.name;
+            document.getElementById('feature-desc').textContent = feature.desc;
+            document.getElementById('feature-info').style.display = 'block';
+        }
+        
+        // 显示历史人物信息
+        function matchPerson(personId) {
+            const person = persons[personId];
+            document.getElementById('person-name').textContent = person.name;
+            document.getElementById('person-desc').textContent = person.desc;
+            document.getElementById('person-info').style.display = 'block';
+        }
+        
+        // 完成游戏
+        function completeGame() {
+            document.getElementById('password-section').style.display = 'block';
+            alert('恭喜！您已完成黑石屋的探索之旅。请记下您的密码：ZS1922，用于解锁知识闯关环节！');
+        }
+        
+        // 解锁答题部分
+        function unlockQuiz() {
+            const password = document.getElementById('password-input').value;
+            if (password === 'ZS1922') {
+                document.getElementById('quiz-lock').style.display = 'none';
+                startTimer();
+            } else {
+                alert('密码错误，请重新输入！提示：密码在完成建筑探索后获得。');
+            }
+        }
+        
+        // 计时器功能
+        let timeLeft = 300; // 5分钟
+        let timerInterval;
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                    alert('时间到！系统已自动提交您的答案。');
+                }
+            }, 1000);
+        }
+        
+        // 答题功能
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            
+            let score = 0;
+            const questions = document.querySelectorAll('.question');
+            
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.option');
+                let answered = false;
+                
+                options.forEach(option => {
+                    if (option.classList.contains('correct') || option.classList.contains('incorrect')) {
+                        answered = true;
+                    }
+                    
+                    if (option.dataset.correct === "true") {
+                        option.classList.add('correct');
+                    }
+                    
+                    const explanation = question.querySelector('.explanation');
+                    explanation.style.display = 'block';
+                });
+                
+                if (answered) {
+                    const selectedOption = question.querySelector('.option.correct, .option.incorrect');
+                    if (selectedOption && selectedOption.dataset.correct === "true") {
+                        score++;
+                    }
+                }
+            });
+            
+            document.getElementById('score').textContent = score;
+            
+            // 根据得分设置称号
+            let title = "";
+            if (score >= 4) {
+                title = "黑石屋历史专家";
+            } else if (score >= 2) {
+                title = "黑石屋探索者";
+            } else {
+                title = "黑石屋初学者";
+            }
+            
+            document.getElementById('title').textContent = title;
+            document.getElementById('quiz-result').style.display = 'block';
+            
+            // 滚动到结果区域
+            document.getElementById('quiz-result').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 选项点击事件
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const options = question.querySelectorAll('.option');
+                
+                // 移除其他选项的样式
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+                
+                // 标记选中的选项
+                if (this.dataset.correct === "true") {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    
+                    // 显示正确答案
+                    options.forEach(opt => {
+                        if (opt.dataset.correct === "true") {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+                
+                // 显示解析
+                const explanation = question.querySelector('.explanation');
+                explanation.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

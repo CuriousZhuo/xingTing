@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>惺亭探秘：中大历史解谜之旅</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #c53d3f;
+            --primary-green: #2ecc71;
+            --light-bg: #f9f6f2;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-gold: #d4b87a;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 90% 80%, rgba(197, 61, 63, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.05) 0%, transparent 30%);
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-red), #9e2c2f);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-size: 1rem;
+            margin: 0 auto;
+            max-width: 90%;
+        }
+        
+        .xingting-icon {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.9;
+        }
+        
+        .tab-container {
+            display: flex;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            color: var(--text-dark);
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: var(--primary-red);
+            border-bottom: 3px solid var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .tab i {
+            margin-right: 5px;
+        }
+        
+        .content-section {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .card h2 {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2 i {
+            margin-right: 12px;
+            color: var(--primary-green);
+        }
+        
+        .xingting-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220"><rect fill="%23f9f6f2" width="400" height="220"/><path d="M150,70 L250,70 L270,150 L130,150 Z" fill="%23c53d3f"/><rect x="180" y="150" width="40" height="40" fill="%23d4b87a"/><circle cx="200" cy="60" r="10" fill="%232ecc71"/></svg>');
+            background-size: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .xingting-image::after {
+            content: "中山大学惺亭";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .info-item {
+            background: linear-gradient(120deg, rgba(197, 61, 63, 0.08), rgba(46, 204, 113, 0.08));
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-green);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-item h3 {
+            color: var(--primary-red);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-item h3 i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(197, 61, 63, 0.1), rgba(46, 204, 113, 0.1));
+            padding: 20px;
+            border-left: 4px solid var(--primary-green);
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background: linear-gradient(120deg, rgba(212, 184, 122, 0.1), rgba(197, 61, 63, 0.1));
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        .quote::before, .quote::after {
+            content: """;
+            font-size: 3rem;
+            color: var(--accent-gold);
+            position: absolute;
+        }
+        
+        .quote::before {
+            top: 0;
+            left: 15px;
+        }
+        
+        .quote::after {
+            bottom: -20px;
+            right: 15px;
+        }
+        
+        .game-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-green);
+            position: relative;
+        }
+        
+        .game-container h2 {
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .game-container h2 i {
+            margin-right: 12px;
+        }
+        
+        .mission-brief {
+            background: linear-gradient(120deg, rgba(197, 61, 63, 0.08), rgba(46, 204, 113, 0.08));
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-red);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .mission-brief h3 {
+            color: var(--primary-red);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mission-brief h3 i {
+            margin-right: 10px;
+        }
+        
+        .morse-machine {
+            background: #f5f2eb;
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px auto;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .morse-screen {
+            background: #1b1b1b;
+            height: 90px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+            padding: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .morse-screen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 50%, rgba(0, 255, 65, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .morse-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .morse-btn {
+            padding: 14px 22px;
+            background: linear-gradient(to bottom, var(--primary-red), #9e2c2f);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(197, 61, 63, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .morse-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(197, 61, 63, 0.4);
+        }
+        
+        .morse-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .morse-btn i {
+            margin-right: 10px;
+        }
+        
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .morse-input {
+            width: 100%;
+            padding: 16px;
+            background: white;
+            border: 2px solid var(--accent-gold);
+            border-radius: 10px;
+            color: var(--text-dark);
+            font-family: inherit;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .morse-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+        }
+        
+        .input-hint {
+            position: absolute;
+            top: -12px;
+            right: 18px;
+            background: var(--primary-green);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            background: linear-gradient(to bottom, var(--primary-green), #27ae60);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 170px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn i {
+            margin-right: 10px;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to bottom, #f39c12, #e67e22);
+            box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 6px 12px rgba(243, 156, 18, 0.4);
+        }
+        
+        .timer {
+            font-size: 1.2rem;
+            margin: 18px 0;
+            color: var(--primary-red);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .timer i {
+            color: var(--primary-red);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 18px 0;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--primary-green), var(--primary-red));
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+        
+        .morse-table-container {
+            background: #f5f2eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid var(--accent-gold);
+        }
+        
+        .morse-table-title {
+            color: var(--primary-red);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .morse-table-title i {
+            margin-right: 10px;
+        }
+        
+        .morse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .morse-table th, .morse-table td {
+            border: 1px solid var(--accent-gold);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .morse-table th {
+            background: linear-gradient(to bottom, var(--primary-red), #9e2c2f);
+            color: white;
+        }
+        
+        .morse-table tr:nth-child(even) {
+            background: rgba(212, 184, 122, 0.1);
+        }
+        
+        .morse-table tr:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+        
+        .reward-section {
+            background: linear-gradient(135deg, rgba(197, 61, 63, 0.1), rgba(46, 204, 113, 0.1));
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px dashed var(--accent-gold);
+            display: none;
+            animation: celebrate 1s ease;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .reward-title {
+            color: var(--primary-red);
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+            font-weight: bold;
+        }
+        
+        .reward-badge {
+            font-size: 4rem;
+            margin: 18px 0;
+            color: var(--primary-green);
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .reward-desc {
+            margin: 18px 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .puzzle-game {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-gold);
+            position: relative;
+        }
+        
+        .game-locked {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(5px);
+        }
+        
+        .lock-icon {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lock-message {
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 0 25px;
+            line-height: 1.6;
+        }
+        
+        .password-form {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 6px;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+        
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 25px 0;
+        }
+        
+        .puzzle-item {
+            background: #f5f2eb;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .puzzle-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-gold);
+        }
+        
+        .puzzle-icon {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            color: var(--primary-red);
+        }
+        
+        .puzzle-question {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+        
+        .puzzle-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .puzzle-option {
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .puzzle-option:hover {
+            background: #f9f6f2;
+            border-color: var(--accent-gold);
+        }
+        
+        .puzzle-option.selected {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+        
+        .puzzle-hint {
+            background: linear-gradient(120deg, rgba(212, 184, 122, 0.1), rgba(197, 61, 63, 0.1));
+            padding: 18px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-size: 1rem;
+            border-left: 4px solid var(--accent-gold);
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: white;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .tab {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            
+            .morse-btn, .btn {
+                min-width: 100%;
+                margin-bottom: 12px;
+            }
+            
+            .morse-screen {
+                height: 80px;
+                font-size: 1.1rem;
+            }
+            
+            .puzzle-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .morse-table {
+                font-size: 0.9rem;
+            }
+            
+            .morse-table th, .morse-table td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>惺亭探秘</h1>
+            <p>解锁中大历史，探索革命记忆</p>
+            <div class="xingting-icon"><i class="fas fa-monument"></i></div>
+        </header>
+        
+        <div class="tab-container">
+            <button class="tab active" data-tab="history"><i class="fas fa-landmark"></i> 惺亭历史</button>
+            <button class="tab" data-tab="game1"><i class="fas fa-code"></i> 密电破译</button>
+            <button class="tab" data-tab="game2"><i class="fas fa-puzzle-piece"></i> 建筑解谜</button>
+        </div>
+        
+        <div class="content-section active" id="history">
+            <div class="card">
+                <h2><i class="fas fa-history"></i> 惺亭：中大校园的历史见证</h2>
+                
+                <div class="xingting-image"></div>
+                
+                <p>惺亭，又称钟亭，是中山大学南校园（康乐园）的标志性建筑之一，位于中大校园中轴线之上，与孙中山先生铜像、乙丑进士牌坊共同构成了康乐园中区一道亮丽的历史风景线。这座建筑不仅是中大的地理标志，更是中大人文精神的重要象征。</p>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3><i class="fas fa-calendar-day"></i> 建造历史</h3>
+                        <p>惺亭建于1928年，由原岭南大学惺社同学捐建，用以纪念史坚如、区励周、许耀章三位烈士。这座建筑见证了中大近百年的历史变迁，从岭南大学到中山大学，它始终屹立在康乐园的中心位置。</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3><i class="fas fa-archway"></i> 建筑特色</h3>
+                        <p>惺亭为西式建筑风格，蓝顶红柱，八角亭式结构。亭高约8米，直径约6米，采用钢筋混凝土结构。亭内悬挂一口铜钟，曾是上下课报时之用，现已作为历史文物保存。建筑整体简洁大方，色彩鲜明，成为校园中一道亮丽的风景。</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3><i class="fas fa-heart"></i> 纪念意义</h3>
+                        <p>惺亭寄托了上世纪初革命青年追求民主、期盼中华觉醒的爱国情怀，是中大校园内重要的爱国主义教育基地。它不仅纪念三位烈士，也象征着中大学子对民主、自由和进步的追求。</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3><i class="fas fa-users"></i> 三位烈士</h3>
+                        <p>史坚如、区励周、许耀章三位烈士均为民主革命事业献出了宝贵生命。史坚如是辛亥革命先驱，区励周和许耀章是1925年沙基惨案中的遇难者。他们的英勇事迹激励着一代代中大学子。</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p><i class="fas fa-lightbulb"></i> 你知道吗？惺亭每周三晚上都会举办英语角活动，这一传统已持续数十年，是中大学子文化交流的重要场所。无论风雨，英语角都会如期举行，成为校园文化的一大特色。</p>
+                </div>
+                
+                <h3><i class="fas fa-map-marked-alt"></i> 地理位置与意义</h3>
+                <p>惺亭位于中山大学南校园中轴线上，东临怀士堂，西接孙中山先生铜像，南望乙丑进士牌坊，北靠马丁堂。其位置的选择体现了设计者对校园空间布局的精心考量，使惺亭成为连接校园历史与现代的纽带。</p>
+                
+                <div class="quote">
+                    "一座建筑，一段历史，一种精神。惺亭不仅是一座亭子，更是中大学子心中的精神图腾。"
+                </div>
+                
+                <div class="highlight">
+                    <p>惺亭不仅是中大的地理中心，也是中大学子的精神中心。许多重要活动都在此举行，它已成为中大人文精神的象征。每年新生入学和毕业生离校时，都会有大量学生在惺亭前拍照留念，记录他们与这座历史建筑的珍贵时刻。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" id="game1">
+            <div class="game-container">
+                <h2><i class="fas fa-code"></i> 摩斯密码破译任务</h2>
+                
+                <div class="mission-brief">
+                    <h3><i class="fas fa-scroll"></i> 任务背景：1928年，惺亭</h3>
+                    <p>你是一名地下工作者，同志们在惺亭留下了一份重要情报。但为了安全，情报使用摩斯密码加密。请破译密码，获取情报内容！破译完成后，你将获得解锁第二个游戏的密码。</p>
+                </div>
+                
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span>剩余时间: </span>
+                    <span id="time">05:00</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div class="morse-machine">
+                    <div class="morse-screen" id="morse-screen">
+                        <span class="typewriter">等待信号传输...</span>
+                    </div>
+                    
+                    <div class="morse-controls">
+                        <button class="morse-btn" id="receive-btn"><i class="fas fa-satellite-dish"></i> 接收信号</button>
+                        <button class="morse-btn" id="repeat-btn"><i class="fas fa-redo"></i> 重复信号</button>
+                        <button class="morse-btn btn-secondary" id="hint-btn"><i class="fas fa-lightbulb"></i> 请求提示 (-30秒)</button>
+                    </div>
+                    
+                    <div class="input-container">
+                        <input type="text" class="morse-input" id="morse-input" placeholder="在此输入破译的明文...">
+                        <div class="input-hint">大写字母，如：ZHONGSHANDAXUE</div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="btn" id="submit-btn"><i class="fas fa-paper-plane"></i> 提交破译</button>
+                        <button class="btn btn-secondary" id="reset-btn"><i class="fas fa-sync-alt"></i> 重新开始</button>
+                    </div>
+                </div>
+                
+                <div class="morse-table-container">
+                    <div class="morse-table-title">
+                        <i class="fas fa-table"></i> 摩斯密码对照表
+                    </div>
+                    <table class="morse-table">
+                        <tr>
+                            <th>字母/数字</th>
+                            <th>摩斯密码</th>
+                            <th>字母/数字</th>
+                            <th>摩斯密码</th>
+                        </tr>
+                        <tr>
+                            <td>A</td><td>.-</td>
+                            <td>N</td><td>-.</td>
+                        </tr>
+                        <tr>
+                            <td>B</td><td>-...</td>
+                            <td>O</td><td>---</td>
+                        </tr>
+                        <tr>
+                            <td>C</td><td>-.-.</td>
+                            <td>P</td><td>.--.</td>
+                        </tr>
+                        <tr>
+                            <td>D</td><td>-..</td>
+                            <td>Q</td><td>--.-</td>
+                        </tr>
+                        <tr>
+                            <td>E</td><td>.</td>
+                            <td>R</td><td>.-.</td>
+                        </tr>
+                        <tr>
+                            <td>F</td><td>..-.</td>
+                            <td>S</td><td>...</td>
+                        </tr>
+                        <tr>
+                            <td>G</td><td>--.</td>
+                            <td>T</td><td>-</td>
+                        </tr>
+                        <tr>
+                            <td>H</td><td>....</td>
+                            <td>U</td><td>..-</td>
+                        </tr>
+                        <tr>
+                            <td>I</td><td>..</td>
+                            <td>V</td><td>...-</td>
+                        </tr>
+                        <tr>
+                            <td>J</td><td>.---</td>
+                            <td>W</td><td>.--</td>
+                        </tr>
+                        <tr>
+                            <td>K</td><td>-.-</td>
+                            <td>X</td><td>-..-</td>
+                        </tr>
+                        <tr>
+                            <td>L</td><td>.-..</td>
+                            <td>Y</td><td>-.--</td>
+                        </tr>
+                        <tr>
+                            <td>M</td><td>--</td>
+                            <td>Z</td><td>--..</td>
+                        </tr>
+                        <tr>
+                            <td>1</td><td>.----</td>
+                            <td>6</td><td>-....</td>
+                        </tr>
+                        <tr>
+                            <td>2</td><td>..---</td>
+                            <td>7</td><td>--...</td>
+                        </tr>
+                        <tr>
+                            <td>3</td><td>...--</td>
+                            <td>8</td><td>---..</td>
+                        </tr>
+                        <tr>
+                            <td>4</td><td>....-</td>
+                            <td>9</td><td>----.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td><td>.....</td>
+                            <td>0</td><td>-----</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="reward-section" id="reward-section">
+                    <div class="reward-title">任务完成！</div>
+                    <div class="reward-badge" id="reward-badge">🎖️</div>
+                    <div class="reward-desc" id="reward-desc"></div>
+                    <div class="reward-desc" id="unlock-code">解锁密码: <strong>XINGTING1928</strong></div>
+                    <button class="btn" id="next-mission-btn"><i class="fas fa-arrow-right"></i> 前往建筑解谜</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" id="game2">
+            <div class="puzzle-game" id="puzzle-game">
+                <div class="game-locked" id="game-locked">
+                    <div class="lock-icon"><i class="fas fa-lock"></i></div>
+                    <div class="lock-message">此游戏尚未解锁，请先完成密电破译任务获取解锁密码</div>
+                    <div class="password-form">
+                        <input type="text" class="password-input" id="password-input" placeholder="请输入解锁密码">
+                        <button class="btn" id="unlock-btn"><i class="fas fa-key"></i> 解锁游戏</button>
+                    </div>
+                </div>
+                
+                <h2><i class="fas fa-puzzle-piece"></i> 惺亭建筑解谜</h2>
+                
+                <div class="mission-brief">
+                    <h3><i class="fas fa-map-marked-alt"></i> 任务背景：寻找隐藏信息</h3>
+                    <p>同志们还在惺亭建筑中隐藏了信息。请仔细观察惺亭的建筑特征，回答下列问题！回答正确所有问题后，将获得下一个地点的线索。</p>
+                </div>
+                
+                <div class="puzzle-hint">
+                    <p><i class="fas fa-lightbulb"></i> 提示：所有问题的答案都可以在"惺亭历史"选项卡中找到！仔细阅读关于惺亭的介绍，你就能找到正确答案。</p>
+                </div>
+                
+                <div class="puzzle-container">
+                    <div class="puzzle-item">
+                        <div class="puzzle-icon"><i class="fas fa-palette"></i></div>
+                        <div class="puzzle-question">惺亭的主要颜色是？</div>
+                        <div class="puzzle-options">
+                            <div class="puzzle-option" data-value="red">蓝顶红柱</div>
+                            <div class="puzzle-option" data-value="green">绿顶黄柱</div>
+                            <div class="puzzle-option" data-value="gray">灰顶白柱</div>
+                        </div>
+                    </div>
+                    
+                    <div class="puzzle-item">
+                        <div class="puzzle-icon"><i class="fas fa-calendar-day"></i></div>
+                        <div class="puzzle-question">惺亭建于哪一年？</div>
+                        <div class="puzzle-options">
+                            <div class="puzzle-option" data-value="1928">1928年</div>
+                            <div class="puzzle-option" data-value="1935">1935年</div>
+                            <div class="puzzle-option" data-value="1949">1949年</div>
+                        </div>
+                    </div>
+                    
+                    <div class="puzzle-item">
+                        <div class="puzzle-icon"><i class="fas fa-users"></i></div>
+                        <div class="puzzle-question">惺亭纪念了几位烈士？</div>
+                        <div class="puzzle-options">
+                            <div class="puzzle-option" data-value="3">三位</div>
+                            <div class="puzzle-option" data-value="5">五位</div>
+                            <div class="puzzle-option" data-value="7">七位</div>
+                        </div>
+                    </div>
+                    
+                    <div class="puzzle-item">
+                        <div class="puzzle-icon"><i class="fas fa-chess-rook"></i></div>
+                        <div class="puzzle-question">惺亭的建筑结构是？</div>
+                        <div class="puzzle-options">
+                            <div class="puzzle-option" data-value="octagonal">八角亭式</div>
+                            <div class="puzzle-option" data-value="hexagonal">六角亭式</div>
+                            <div class="puzzle-option" data-value="quadrangular">四角亭式</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="puzzle-submit"><i class="fas fa-check-circle"></i> 提交答案</button>
+                    <button class="btn btn-secondary" id="puzzle-hint"><i class="fas fa-question-circle"></i> 查看提示</button>
+                </div>
+                
+                <div class="reward-section" id="puzzle-reward">
+                    <div class="reward-title">解谜成功！</div>
+                    <div class="reward-badge">🏛️</div>
+                    <div class="reward-desc">恭喜你完成了所有任务！下一个研学地点是：<strong>乙丑进士牌坊</strong>。请前往该地点继续你的探索之旅！</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 中山大学历史文化探索项目 | 设计用于教育与文化传播</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 选项卡功能
+            const tabs = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // 更新选项卡状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // 更新内容显示
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === tabId) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // 摩斯密码游戏逻辑
+            const receiveBtn = document.getElementById('receive-btn');
+            const repeatBtn = document.getElementById('repeat-btn');
+            const hintBtn = document.getElementById('hint-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const nextMissionBtn = document.getElementById('next-mission-btn');
+            const morseScreen = document.getElementById('morse-screen');
+            const morseInput = document.getElementById('morse-input');
+            const timeDisplay = document.getElementById('time');
+            const progressBar = document.getElementById('progress-bar');
+            const rewardSection = document.getElementById('reward-section');
+            const rewardBadge = document.getElementById('reward-badge');
+            const rewardDesc = document.getElementById('reward-desc');
+            const unlockCode = document.getElementById('unlock-code');
+            const puzzleGame = document.getElementById('puzzle-game');
+            const gameLocked = document.getElementById('game-locked');
+            const passwordInput = document.getElementById('password-input');
+            const unlockBtn = document.getElementById('unlock-btn');
+            const puzzleReward = document.getElementById('puzzle-reward');
+            const puzzleSubmit = document.getElementById('puzzle-submit');
+            const puzzleHint = document.getElementById('puzzle-hint');
+            
+            // 摩斯密码消息 (缩短且无空格)
+            const morseMessages = [
+                "XINGTING",
+                "1928",
+                "MARTYRS"
+            ];
+            
+            // 称号系统
+            const titles = [
+                { badge: "🔍", name: "密码新手", desc: "你成功破译了第一条密电，迈出了成为地下工作者的第一步！" },
+                { badge: "🎖️", name: "情报专员", desc: "你展现了出色的密码破译能力，同志们的安全有了保障！" },
+                { badge: "🏆", name: "密电专家", desc: "你成功破译了所有密电，组织对你的能力非常认可！" }
+            ];
+            
+            // 当前游戏状态
+            let gameState = {
+                active: false,
+                currentMessage: 0,
+                timeLeft: 300, // 5分钟
+                timer: null,
+                morseQueue: [],
+                completedMessages: 0,
+                game2Unlocked: false
+            };
+            
+            // 摩斯密码映射
+            const morseCode = {
+                'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 
+                'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 
+                'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 
+                'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 
+                'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 
+                'Z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', 
+                '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', 
+                '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', '/': '-..-.', 
+                '-': '-....-', '(': '-.--.', ')': '-.--.-'
+            };
+            
+            // 初始化游戏
+            function initGame() {
+                gameState.active = false;
+                gameState.currentMessage = 0;
+                gameState.timeLeft = 300;
+                gameState.morseQueue = [];
+                gameState.completedMessages = 0;
+                
+                timeDisplay.textContent = "05:00";
+                progressBar.style.width = "0%";
+                morseScreen.innerHTML = '<span class="typewriter">等待信号传输...</span>';
+                morseInput.value = "";
+                rewardSection.style.display = "none";
+                
+                clearInterval(gameState.timer);
+                
+                receiveBtn.disabled = false;
+            }
+            
+            // 开始游戏
+            function startGame() {
+                if (!gameState.active) {
+                    gameState.active = true;
+                    
+                    // 开始计时
+                    gameState.timer = setInterval(() => {
+                        gameState.timeLeft--;
+                        
+                        const minutes = Math.floor(gameState.timeLeft / 60);
+                        const seconds = gameState.timeLeft % 60;
+                        timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        
+                        // 更新进度条
+                        progressBar.style.width = `${(300 - gameState.timeLeft) / 300 * 100}%`;
+                        
+                        if (gameState.timeLeft <= 0) {
+                            clearInterval(gameState.timer);
+                            endGame(false);
+                        }
+                    }, 1000);
+                }
+            }
+            
+            // 接收摩斯信号
+            function receiveMorse() {
+                if (!gameState.active) {
+                    startGame();
+                }
+                
+                receiveBtn.disabled = true;
+                
+                // 准备当前消息
+                const message = morseMessages[gameState.currentMessage];
+                gameState.morseQueue = [];
+                
+                // 转换为摩斯密码
+                for (let char of message) {
+                    if (morseCode[char]) {
+                        gameState.morseQueue.push(morseCode[char]);
+                    }
+                }
+                
+                // 显示传输中
+                morseScreen.innerHTML = '<span class="blink">信号接收中...</span>';
+                
+                // 开始显示摩斯密码
+                setTimeout(displayMorse, 2000);
+            }
+            
+            // 显示摩斯密码
+            function displayMorse() {
+                if (gameState.morseQueue.length === 0) {
+                    morseScreen.innerHTML = '<span>信号传输完成</span>';
+                    receiveBtn.disabled = false;
+                    return;
+                }
+                
+                const code = gameState.morseQueue.shift();
+                let displayText = "";
+                
+                for (let symbol of code) {
+                    displayText += symbol === '.' ? "• " : "- ";
+                }
+                
+                morseScreen.innerHTML = `<span>${displayText}</span>`;
+                
+                // 计算下一个代码的延迟
+                const delay = code.length * 500 + 1000;
+                
+                setTimeout(() => {
+                    morseScreen.innerHTML = '<span> </span>';
+                    setTimeout(displayMorse, 500);
+                }, delay);
+            }
+            
+            // 重复信号
+            function repeatSignal() {
+                if (gameState.morseQueue.length === 0) return;
+                
+                morseScreen.innerHTML = '<span class="blink">重复信号...</span>';
+                
+                setTimeout(() => {
+                    displayMorse();
+                }, 1000);
+            }
+            
+            // 提交答案
+            function submitAnswer() {
+                const answer = morseInput.value.trim().toUpperCase();
+                const correctAnswer = morseMessages[gameState.currentMessage];
+                
+                if (answer === correctAnswer) {
+                    // 正确答案
+                    gameState.completedMessages++;
+                    
+                    if (gameState.completedMessages >= morseMessages.length) {
+                        // 所有消息完成
+                        endGame(true);
+                    } else {
+                        // 下一个消息
+                        gameState.currentMessage++;
+                        alert("破译成功！准备接收下一条密电...");
+                        morseInput.value = "";
+                        receiveBtn.disabled = false;
+                        
+                        // 显示中间奖励
+                        showReward(gameState.completedMessages - 1);
+                    }
+                } else {
+                    alert("破译错误！请重新尝试。");
+                }
+            }
+            
+            // 显示奖励
+            function showReward(level) {
+                const title = titles[level];
+                rewardBadge.textContent = title.badge;
+                rewardDesc.textContent = `获得称号: ${title.name} - ${title.desc}`;
+                
+                // 如果是最终奖励，显示解锁密码和下一个任务按钮
+                if (level === titles.length - 1) {
+                    unlockCode.style.display = "block";
+                    nextMissionBtn.style.display = "block";
+                } else {
+                    unlockCode.style.display = "none";
+                    nextMissionBtn.style.display = "none";
+                }
+                
+                rewardSection.style.display = "block";
+            }
+            
+            // 结束游戏
+            function endGame(success) {
+                clearInterval(gameState.timer);
+                gameState.active = false;
+                
+                if (success) {
+                    // 显示最终奖励
+                    showReward(2);
+                } else {
+                    alert("时间已到！任务失败。你可以重新开始挑战。");
+                    morseScreen.innerHTML = '<span style="color:#ff0000">任务超时！</span>';
+                }
+            }
+            
+            // 解锁第二个游戏
+            function unlockGame2() {
+                if (passwordInput.value === "XINGTING1928") {
+                    gameState.game2Unlocked = true;
+                    gameLocked.style.display = "none";
+                    alert("游戏已解锁！现在你可以开始建筑解谜任务了。");
+                } else {
+                    alert("密码错误！请检查密码是否正确。");
+                }
+            }
+            
+            // 第二个游戏逻辑
+            function initPuzzleGame() {
+                // 如果游戏已解锁，隐藏锁定界面
+                if (gameState.game2Unlocked) {
+                    gameLocked.style.display = "none";
+                }
+                
+                // 添加选项选择事件
+                const puzzleOptions = document.querySelectorAll('.puzzle-option');
+                puzzleOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        // 移除同问题中其他选项的选中状态
+                        const parentItem = option.closest('.puzzle-item');
+                        parentItem.querySelectorAll('.puzzle-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // 选中当前选项
+                        option.classList.add('selected');
+                    });
+                });
+            }
+            
+            // 检查第二个游戏的答案
+            function checkPuzzleAnswer() {
+                const answers = {
+                    "red": true,
+                    "1928": true,
+                    "3": true,
+                    "octagonal": true
+                };
+                
+                let allAnswered = true;
+                let allCorrect = true;
+                
+                document.querySelectorAll('.puzzle-item').forEach(item => {
+                    const selectedOption = item.querySelector('.puzzle-option.selected');
+                    if (!selectedOption) {
+                        allAnswered = false;
+                        return;
+                    }
+                    
+                    const value = selectedOption.getAttribute('data-value');
+                    if (!answers[value]) {
+                        allCorrect = false;
+                    }
+                });
+                
+                if (!allAnswered) {
+                    alert("请回答所有问题！");
+                    return;
+                }
+                
+                if (allCorrect) {
+                    puzzleReward.style.display = "block";
+                } else {
+                    alert("答案不正确！请参考惺亭历史选项卡中的信息。");
+                }
+            }
+            
+            // 第二个游戏提示
+            function showPuzzleHint() {
+                alert("提示：所有问题的答案都可以在'惺亭历史'选项卡中找到。仔细阅读关于惺亭的介绍，你就能找到正确答案！");
+            }
+            
+            // 添加事件监听器
+            receiveBtn.addEventListener('click', receiveMorse);
+            repeatBtn.addEventListener('click', repeatSignal);
+            submitBtn.addEventListener('click', submitAnswer);
+            resetBtn.addEventListener('click', initGame);
+            nextMissionBtn.addEventListener('click', () => {
+                // 切换到第二个游戏
+                tabs.forEach(t => t.classList.remove('active'));
+                document.querySelector('[data-tab="game2"]').classList.add('active');
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === 'game2') {
+                        section.classList.add('active');
+                    }
+                });
+            });
+            
+            hintBtn.addEventListener('click', () => {
+                if (!gameState.active) {
+                    alert("请先开始接收信号！");
+                    return;
+                }
+                
+                const message = morseMessages[gameState.currentMessage];
+                const hint = message.substring(0, Math.ceil(message.length / 2));
+                alert(`提示: "${hint}..."`);
+                
+                // 减少时间作为使用提示的代价
+                gameState.timeLeft = Math.max(0, gameState.timeLeft - 30);
+            });
+            
+            unlockBtn.addEventListener('click', unlockGame2);
+            puzzleSubmit.addEventListener('click', checkPuzzleAnswer);
+            puzzleHint.addEventListener('click', showPuzzleHint);
+            
+            // 初始化游戏
+            initGame();
+            initPuzzleGame();
+        });
+    </script>
+</body>
+</html>

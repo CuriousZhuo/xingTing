@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>追寻大师足迹 - 陈寅恪故居研学平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Noto Serif SC', serif;
+        }
+        
+        :root {
+            --primary-color: #8b0000;
+            --secondary-color: #d4af37;
+            --dark-bg: #2a0f0f;
+            --light-bg: #f9f3e9;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a0a0a 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 5px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(139, 0, 0, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab {
+            padding: 12px 30px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab.active {
+            background: var(--secondary-color);
+            color: var(--dark-bg);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 研学讲解页面样式 */
+        .lecture-content {
+            background: rgba(249, 243, 233, 0.95);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .lecture-section {
+            margin-bottom: 30px;
+        }
+        
+        .lecture-section h2 {
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .lecture-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .carousel-control {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        .carousel-indicator.active {
+            background: var(--secondary-color);
+        }
+        
+        /* 游戏页面样式 */
+        .game-content {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .timer {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--secondary-color);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .start-screen {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .start-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .start-screen p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .start-btn {
+            background: var(--secondary-color);
+            color: var(--dark-bg);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .start-btn:hover {
+            background: #e6c34e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .question-container {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .question {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .option {
+            background: rgba(139, 0, 0, 0.5);
+            border: 2px solid #8b0000;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .option:hover {
+            background: rgba(139, 0, 0, 0.7);
+            transform: translateY(-3px);
+        }
+        
+        .option.correct {
+            background: rgba(0, 100, 0, 0.7);
+            border-color: #008000;
+        }
+        
+        .option.incorrect {
+            background: rgba(139, 0, 0, 0.7);
+            border-color: #ff0000;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(0, 100, 0, 0.3);
+            border-left: 5px solid #00aa00;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(139, 0, 0, 0.3);
+            border-left: 5px solid #ff0000;
+            display: block;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        button {
+            background: var(--secondary-color);
+            color: var(--dark-bg);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #e6c34e;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-screen {
+            text-align: center;
+            display: none;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .result-title {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 4rem;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+        
+        .badge {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin: 20px 0;
+            padding: 10px 20px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 50px;
+            display: inline-block;
+        }
+        
+        .next-destination {
+            background: rgba(139, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .facts {
+            background: rgba(139, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .fact-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .fact-item:before {
+            content: "•";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .tab {
+                border-radius: 0;
+            }
+            
+            .tab:first-child {
+                border-radius: 10px 10px 0 0;
+            }
+            
+            .tab:last-child {
+                border-radius: 0 0 10px 10px;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>追寻大师足迹</h1>
+            <div class="subtitle">中山大学南校园陈寅恪故居研学平台</div>
+            <div class="tabs">
+                <div class="tab active" data-tab="lecture">研学讲解</div>
+                <div class="tab" data-tab="game">知识挑战</div>
+            </div>
+        </header>
+        
+        <!-- 研学讲解页面 -->
+        <div class="tab-content active" id="lecture">
+            <div class="lecture-content">
+                <!-- 轮播图 -->
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <!-- 轮播图项1 -->
+                        <!-- 注意：请将以下图片URL替换为您自己的图片 -->
+                        <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <div class="carousel-caption">陈寅恪故居外观 - 红砖建筑的历史韵味</div>
+                        </div>
+                        <!-- 轮播图项2 -->
+                        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <div class="carousel-caption">故居内部陈设 - 大师生活与工作的空间</div>
+                        </div>
+                        <!-- 轮播图项3 -->
+                        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1532162603259-45ea0dfed0c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <div class="carousel-caption">故居周边环境 - 中大南校园的历史氛围</div>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <div class="carousel-indicator active" data-index="0"></div>
+                        <div class="carousel-indicator" data-index="1"></div>
+                        <div class="carousel-indicator" data-index="2"></div>
+                    </div>
+                </div>
+                
+                <div class="lecture-section">
+                    <h2>陈寅恪故居的历史价值</h2>
+                    <p>中山大学南校园内的陈寅恪故居，位于东南区一号，是一座具有深厚历史底蕴的红砖建筑。这座建筑不仅是陈寅恪先生晚年居住和工作的场所，更是中国现代学术史的重要见证。</p>
+                    <p>故居建于20世纪初期，是康乐园早期建筑群的重要组成部分，体现了中西合璧的建筑风格。陈寅恪先生于1953年至1969年在此居住，期间尽管视力严重下降，仍坚持学术研究，完成了《柳如是别传》等重要著作。</p>
+                    <div class="highlight">
+                        <p><strong>研学重点：</strong>陈寅恪故居是中山大学"独立之精神，自由之思想"学术传统的象征，体现了学者在困境中坚守学术理想的精神。</p>
+                    </div>
+                </div>
+                
+                <div class="lecture-section">
+                    <h2>建筑特色与人文关怀</h2>
+                    <p>陈寅恪故居为二层红砖小楼，外观简洁大方，内部布局合理。最令人感动的是故居门前特制的白色小路，这是学校为视力严重下降的陈寅恪先生专门修建的，帮助他安全行走。</p>
+                    <p>故居内部保留了陈寅恪先生生活时期的陈设，书房兼作教室，体现了先生将生活与学术融为一体的治学态度。二楼走廊被改造成授课空间，成为当时研究生们接受指导的重要场所。</p>
+                    <div class="highlight">
+                        <p><strong>研学重点：</strong>观察建筑细节，理解空间布局如何反映主人的生活状态和学术追求。</p>
+                    </div>
+                </div>
+                
+                <div class="lecture-section">
+                    <h2>陈寅恪的学术精神</h2>
+                    <p>陈寅恪先生是中国现代最杰出的历史学家之一，精通多种古代语言，在中国古代史、佛教史和文学史等领域均有开创性贡献。他提出的"独立之精神，自由之思想"已成为中国知识分子的精神标杆。</p>
+                    <p>在故居生活的十六年间，尽管面临视力障碍和政治环境的压力，陈寅恪先生依然坚持学术研究，通过口述方式完成了多部重要著作，展现了非凡的学术毅力。</p>
+                    <div class="highlight">
+                        <p><strong>研学重点：</strong>理解陈寅恪学术精神的内涵，思考其在当代学术研究中的意义。</p>
+                    </div>
+                </div>
+                
+                <div class="lecture-section">
+                    <h2>故居与中大校园文化</h2>
+                    <p>陈寅恪故居与中山大学其他历史建筑如怀士堂、马丁堂等共同构成了南校园深厚的历史文化景观。这些建筑不仅是学校历史的见证，更是学术传统的重要载体。</p>
+                    <p>今天，陈寅恪故居作为校史陈列馆对外开放，成为中山大学重要的文化地标，吸引着众多学者和游客前来参观，感受大师的学术气息。</p>
+                    <div class="highlight">
+                        <p><strong>研学重点：</strong>比较陈寅恪故居与校园内其他历史建筑的异同，理解其在校园文化中的独特地位。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 知识挑战页面 -->
+        <div class="tab-content" id="game">
+            <div class="game-content">
+                <div class="game-header">
+                    <h2>陈寅恪故居知识挑战</h2>
+                    <div class="timer">剩余时间: <span id="time">10:00</span></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                
+                <!-- 开始屏幕 -->
+                <div class="start-screen" id="start-screen">
+                    <h2>欢迎参加陈寅恪故居知识挑战!</h2>
+                    <p>本挑战包含10道关于陈寅恪故居的选择题，您需要在10分钟内完成。</p>
+                    <p>每答对一题得10分，答错不扣分。挑战结束后，您将根据得分获得相应的称号。</p>
+                    <p>准备好了吗？点击下方按钮开始挑战！</p>
+                    <button class="start-btn" id="start-btn">开始挑战</button>
+                </div>
+                
+                <!-- 游戏区域 -->
+                <div class="game-area" id="game-area">
+                    <div class="question-container" id="question-container">
+                        <div class="question" id="question">问题加载中...</div>
+                        <div class="options" id="options">
+                            <!-- 选项将通过JavaScript动态生成 -->
+                        </div>
+                        <div class="feedback" id="feedback">
+                            <!-- 反馈信息将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="controls" id="controls">
+                        <button id="prev-btn" disabled>上一题</button>
+                        <button id="next-btn">下一题</button>
+                    </div>
+                </div>
+                
+                <!-- 结果屏幕 -->
+                <div class="result-screen" id="result-screen">
+                    <div class="result-title">挑战完成!</div>
+                    <div class="score" id="final-score">0/100</div>
+                    <div class="badge" id="badge">称号加载中...</div>
+                    <div class="next-destination">
+                        <h3>下一站推荐</h3>
+                        <p>恭喜您完成陈寅恪故居的研学挑战！接下来建议您前往<b>中山大学生物博物馆</b>继续您的研学之旅。</p>
+                        <p>生物博物馆收藏有丰富的动植物标本，是了解岭南地区生物多样性的重要场所。</p>
+                    </div>
+                    <div class="facts" id="facts">
+                        <!-- 知识点将通过JavaScript动态生成 -->
+                    </div>
+                    <button id="restart-btn">再试一次</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>中山大学南校园陈寅恪故居研学平台 &copy; 2023 | 设计用于教育目的</p>
+        </footer>
+    </div>
+
+    <script>
+        // 游戏数据
+        const questions = [
+            {
+                question: "陈寅恪故居位于中山大学哪个校区？",
+                options: ["东校园", "南校园", "北校园", "珠海校区"],
+                correct: 1,
+                fact: "陈寅恪故居位于中山大学南校园，是中山大学著名的历史建筑之一。"
+            },
+            {
+                question: "陈寅恪故居的建筑风格主要是什么？",
+                options: ["现代风格", "欧式风格", "中西合璧", "纯中式风格"],
+                correct: 2,
+                fact: "陈寅恪故居采用中西合璧的建筑风格，是康乐园早期建筑群的典型代表。"
+            },
+            {
+                question: "陈寅恪在中山大学任教期间，主要研究领域是什么？",
+                options: ["物理学", "中国古代史", "经济学", "外国文学"],
+                correct: 1,
+                fact: "陈寅恪是中国现代最负盛名的历史学家之一，精通中国古代历史、文化和语言。"
+            },
+            {
+                question: "陈寅恪故居门前的白色小路有什么特殊意义？",
+                options: ["装饰作用", "为视力不佳的陈寅恪特别设计", "宗教象征", "无特殊意义"],
+                correct: 1,
+                fact: "白色小路是为了帮助晚年视力严重下降的陈寅恪先生安全行走而特别设计的。"
+            },
+            {
+                question: "陈寅恪最著名的学术理念是什么？",
+                options: ["独立之精神，自由之思想", "科学救国", "教育为本", "实业兴邦"],
+                correct: 0,
+                fact: "陈寅恪倡导'独立之精神，自由之思想'的学术理念，影响了几代学人。"
+            },
+            {
+                question: "陈寅恪故居现在的主要功能是什么？",
+                options: ["教师住宅", "学生宿舍", "校史陈列馆", "餐厅"],
+                correct: 2,
+                fact: "陈寅恪故居现在作为校史陈列馆，展示中山大学的历史与文化。"
+            },
+            {
+                question: "陈寅恪在中山大学期间完成了哪部重要著作？",
+                options: ["《柳如是别传》", "《中国通史》", "《诗经研究》", "《唐代政治史》"],
+                correct: 0,
+                fact: "陈寅恪在中山大学期间完成了《柳如是别传》，这是他晚年最重要的著作之一。"
+            },
+            {
+                question: "陈寅恪故居的建筑材质主要是什么？",
+                options: ["木材", "红砖", "大理石", "混凝土"],
+                correct: 1,
+                fact: "陈寅恪故居采用红砖建造，是中山大学南校园红砖建筑群的典型代表。"
+            },
+            {
+                question: "陈寅恪故居的牌匾由谁题写？",
+                options: ["陈寅恪本人", "孙中山", "饶宗颐", "鲁迅"],
+                correct: 2,
+                fact: "陈寅恪故居的牌匾由著名学者饶宗颐先生题写，彰显了其学术地位。"
+            },
+            {
+                question: "陈寅恪故居与中山大学哪个著名地标相邻？",
+                options: ["孙中山纪念铜像", "图书馆", "体育馆", "主教学楼"],
+                correct: 0,
+                fact: "陈寅恪故居与孙中山纪念铜像相邻，共同构成中山大学南校园的重要人文景观。"
+            }
+        ];
+
+        // 称号系统
+        const badges = {
+            100: "陈寅恪学术传承者",
+            90: "故居知识大师",
+            80: "历史探索专家",
+            70: "文化研学达人",
+            60: "校园文化爱好者",
+            50: "初学者"
+        };
+
+        // 游戏状态
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = new Array(questions.length).fill(-1);
+        let timeLeft = 600; // 10分钟，以秒计
+        let timerInterval;
+        let gameStarted = false;
+
+        // DOM元素
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const startScreen = document.getElementById('start-screen');
+        const startBtn = document.getElementById('start-btn');
+        const gameArea = document.getElementById('game-area');
+        const questionContainer = document.getElementById('question-container');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const controls = document.getElementById('controls');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resultScreen = document.getElementById('result-screen');
+        const finalScoreElement = document.getElementById('final-score');
+        const badgeElement = document.getElementById('badge');
+        const factsElement = document.getElementById('facts');
+        const restartBtn = document.getElementById('restart-btn');
+        const timeElement = document.getElementById('time');
+        const progressElement = document.getElementById('progress');
+
+        // 轮播图功能
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const carouselIndicators = document.querySelectorAll('.carousel-indicator');
+        const prevButton = document.querySelector('.carousel-control.prev');
+        const nextButton = document.querySelector('.carousel-control.next');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            // 隐藏所有幻灯片
+            carouselItems.forEach(item => item.classList.remove('active'));
+            carouselIndicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // 显示指定幻灯片
+            carouselItems[index].classList.add('active');
+            carouselIndicators[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % carouselItems.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            let prevIndex = (currentSlide - 1 + carouselItems.length) % carouselItems.length;
+            showSlide(prevIndex);
+        }
+
+        // 轮播图自动播放
+        let carouselInterval = setInterval(nextSlide, 5000);
+
+        // 轮播图控制事件
+        nextButton.addEventListener('click', () => {
+            clearInterval(carouselInterval);
+            nextSlide();
+            carouselInterval = setInterval(nextSlide, 5000);
+        });
+
+        prevButton.addEventListener('click', () => {
+            clearInterval(carouselInterval);
+            prevSlide();
+            carouselInterval = setInterval(nextSlide, 5000);
+        });
+
+        // 指示器点击事件
+        carouselIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+                showSlide(index);
+                carouselInterval = setInterval(nextSlide, 5000);
+            });
+        });
+
+        // 标签切换功能
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                // 更新活动标签
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 显示对应内容
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === targetTab) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // 如果切换到游戏页面且游戏未开始，重置游戏状态
+                if (targetTab === 'game' && !gameStarted) {
+                    resetGame();
+                }
+            });
+        });
+
+        // 开始游戏
+        startBtn.addEventListener('click', () => {
+            startScreen.style.display = 'none';
+            questionContainer.style.display = 'block';
+            controls.style.display = 'flex';
+            gameStarted = true;
+            startTimer();
+            displayQuestion();
+        });
+
+        // 重置游戏
+        function resetGame() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers.fill(-1);
+            timeLeft = 600;
+            gameStarted = false;
+            
+            startScreen.style.display = 'block';
+            questionContainer.style.display = 'none';
+            controls.style.display = 'none';
+            resultScreen.style.display = 'none';
+            gameArea.style.display = 'block';
+            
+            updateTimerDisplay();
+            updateProgress();
+            
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        }
+
+        // 初始化游戏
+        function initGame() {
+            updateTimerDisplay();
+            updateProgress();
+        }
+
+        // 显示当前问题
+        function displayQuestion() {
+            const q = questions[currentQuestion];
+            questionElement.textContent = `${currentQuestion + 1}. ${q.question}`;
+            
+            optionsElement.innerHTML = '';
+            q.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[currentQuestion] === index) {
+                    optionElement.classList.add(userAnswers[currentQuestion] === q.correct ? 'correct' : 'incorrect');
+                }
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // 显示反馈（如果已回答）
+            if (userAnswers[currentQuestion] !== -1) {
+                showFeedback();
+            } else {
+                feedbackElement.style.display = 'none';
+            }
+            
+            // 更新按钮状态
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? '完成挑战' : '下一题';
+        }
+
+        // 选择答案
+        function selectOption(optionIndex) {
+            if (userAnswers[currentQuestion] !== -1) return; // 已回答过的不再处理
+            
+            userAnswers[currentQuestion] = optionIndex;
+            const q = questions[currentQuestion];
+            
+            // 更新选项样式
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach((el, idx) => {
+                el.classList.remove('correct', 'incorrect');
+                if (idx === q.correct) {
+                    el.classList.add('correct');
+                } else if (idx === optionIndex && optionIndex !== q.correct) {
+                    el.classList.add('incorrect');
+                }
+            });
+            
+            // 计分
+            if (optionIndex === q.correct) {
+                score += 10;
+            }
+            
+            showFeedback();
+        }
+
+        // 显示反馈
+        function showFeedback() {
+            const q = questions[currentQuestion];
+            const userAnswer = userAnswers[currentQuestion];
+            
+            feedbackElement.textContent = userAnswer === q.correct ? 
+                `✓ 正确! ${q.fact}` : 
+                `✗ 不正确。正确答案是: ${q.options[q.correct]}。${q.fact}`;
+                
+            feedbackElement.className = userAnswer === q.correct ? 'feedback correct' : 'feedback incorrect';
+        }
+
+        // 下一题
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateProgress();
+            } else {
+                finishGame();
+            }
+        });
+
+        // 上一题
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateProgress();
+            }
+        });
+
+        // 完成游戏
+        function finishGame() {
+            clearInterval(timerInterval);
+            gameArea.style.display = 'none';
+            resultScreen.style.display = 'block';
+            
+            finalScoreElement.textContent = `${score}/100`;
+            
+            // 根据得分分配称号
+            let badgeText = "初学者";
+            for (const [threshold, badge] of Object.entries(badges)) {
+                if (score >= parseInt(threshold)) {
+                    badgeText = badge;
+                }
+            }
+            badgeElement.textContent = `称号: ${badgeText}`;
+            
+            // 显示知识点总结
+            factsElement.innerHTML = '';
+            questions.forEach((q, index) => {
+                const factItem = document.createElement('div');
+                factItem.className = 'fact-item';
+                factItem.innerHTML = `<strong>${index + 1}. ${q.question}</strong><br>${q.fact}`;
+                factsElement.appendChild(factItem);
+            });
+        }
+
+        // 重新开始游戏
+        restartBtn.addEventListener('click', () => {
+            resetGame();
+        });
+
+        // 计时器
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                updateProgress();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishGame();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressElement.style.width = `${progress}%`;
+        }
+
+        // 初始化页面
+        window.onload = initGame;
+    </script>
+</body>
+</html>

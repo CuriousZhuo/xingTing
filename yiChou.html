@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乙丑进士牌坊研学之旅 - 中山大学</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9e6b4d;
+            --secondary-color: #e6d6b9;
+            --accent-color: #d4af37;
+            --dark-color: #4a3c2d;
+            --light-color: #f8f3e6;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.7;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect fill="%234a3c2d" width="100" height="100"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, rgba(158, 107, 77, 0.1), transparent);
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+        }
+        
+        /* 导航样式 */
+        nav {
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            margin: 0;
+        }
+        
+        .nav-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 16px 24px;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        /* 内容区块样式 */
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "◆";
+            color: var(--accent-color);
+            margin-right: 15px;
+            font-size: 0.8em;
+        }
+        
+        /* 时间线样式 */
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 50%;
+            padding: 0 40px;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .timeline-content::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -15px;
+            border-width: 8px 0 8px 15px;
+            border-color: transparent transparent transparent var(--secondary-color);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -15px;
+            border-width: 8px 15px 8px 0;
+            border-color: transparent var(--secondary-color) transparent transparent;
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-year::before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* 卡片样式 */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom, white, var(--secondary-color));
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        /* 游戏样式 */
+        .game-container {
+            background: linear-gradient(to bottom, var(--secondary-color), white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .game-title {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+        
+        .game-description {
+            color: var(--dark-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .difficulty-btn {
+            background-color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .difficulty-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-card {
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .question-container {
+            margin: 20px 0;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 1em;
+        }
+        
+        .option-btn:hover {
+            background-color: #d4c5a8;
+        }
+        
+        .timer-container {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .timer-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-color), #f44336);
+            width: 100%;
+            transition: width 1s linear;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .progress-container::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .active .step-indicator {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .completed .step-indicator {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        
+        .result-container {
+            text-align: center;
+            display: none;
+            padding: 30px;
+        }
+        
+        .rank-badge {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--accent-color), #f9a825);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+            border: 5px solid white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7d543c;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid var(--secondary-color);
+            color: var(--dark-color);
+            font-size: 0.9em;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .difficulty-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after {
+                left: -15px;
+                right: auto;
+                border-width: 8px 15px 8px 0;
+                border-color: transparent var(--secondary-color) transparent transparent;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>乙丑进士牌坊研学之旅</h1>
+                <p class="subtitle">穿越历史长河，探寻明代进士的荣耀与传奇</p>
+            </div>
+        </header>
+
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#intro" class="nav-link">牌坊简介</a></li>
+                <li class="nav-item"><a href="#history" class="nav-link">历史沿革</a></li>
+                <li class="nav-item"><a href="#structure" class="nav-link">建筑特色</a></li>
+                <li class="nav-item"><a href="#scholars" class="nav-link">七位进士</a></li>
+                <li class="nav-item"><a href="#significance" class="nav-link">文化意义</a></li>
+                <li class="nav-item"><a href="#game" class="nav-link">互动游戏</a></li>
+            </ul>
+        </nav>
+
+        <section id="intro" class="section">
+            <h2 class="section-title">乙丑进士牌坊简介</h2>
+            <p>乙丑进士牌坊，又称"中山大学进士牌坊"，是一座具有丰富历史价值的明代石牌坊。该牌坊始建于明崇祯八年（1635年），为表彰明天启五年（1625年）广东七位进士而立，原位于广州四牌楼（今解放中路），1940年代迁至岭南大学（现中山大学）校园内。</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">建造时间</div>
+                    <div class="card-body">
+                        <p>明崇祯八年（1635年）</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">建筑风格</div>
+                    <div class="card-body">
+                        <p>明代石牌坊，四柱三间五楼式</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">表彰对象</div>
+                    <div class="card-body">
+                        <p>明天启五年（1625年）广东七位进士</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>牌坊采用砂岩砌筑，高约10米，宽约9米，规模宏大，雕刻精美。其正面刻有"乙丑进士"四字，背面则详细记载了七位进士的姓名和籍贯。这座牌坊不仅是明代科举制度的重要实物见证，也是研究广东地区历史文化与建筑艺术的珍贵遗产。</p>
+        </section>
+
+        <section id="history" class="section">
+            <h2 class="section-title">历史沿革</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1625年</div>
+                    <div class="timeline-content">
+                        <p>明天启五年，广东七位学子同中进士，创造了科举史上的佳话。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1635年</div>
+                    <div class="timeline-content">
+                        <p>明崇祯八年，为表彰这一盛事，朝廷特赐建"乙丑进士"牌坊于广州四牌楼。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1940年代</div>
+                    <div class="timeline-content">
+                        <p>牌坊因城市发展需要，由广州市政府迁至岭南大学（现中山大学）校园内。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1999年</div>
+                    <div class="timeline-content">
+                        <p>乙丑进士牌坊被列为广州市文物保护单位，得到更好的保护与研究。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="structure" class="section">
+            <h2 class="section-title">建筑特色</h2>
+            <p>乙丑进士牌坊是一座典型的明代石牌坊，具有以下建筑特点：</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">结构形式</div>
+                    <div class="card-body">
+                        <p>四柱三间五楼式结构，中间高两侧低，形成庄严的对称美。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">建筑材料</div>
+                    <div class="card-body">
+                        <p>采用优质砂岩砌筑，坚固耐久，历经数百年风雨仍保存完好。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">雕刻工艺</div>
+                    <div class="card-body">
+                        <p>运用浮雕、透雕等多种技法，图案精美，工艺精湛，体现了明代石雕艺术的高超水平。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>牌坊上的雕刻图案丰富多样，包括云纹、龙纹、花卉等传统纹样，以及象征科举功名的文房四宝、如意等图案。这些装饰不仅美观，还蕴含着丰富的文化寓意，体现了古代工匠的高超技艺和审美追求。</p>
+        </section>
+
+        <section id="scholars" class="section">
+            <h2 class="section-title">七位进士</h2>
+            <p>明天启五年（1625年），广东七位学子同中进士，创造了科举史上的佳话。这七位进士分别是：</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">梁士济</div>
+                    <div class="card-body">
+                        <p>字道舟，广东南海人，官至南京户部主事。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">李觉斯</div>
+                    <div class="card-body">
+                        <p>字伯铎，广东东莞人，官至刑部尚书，为官清正，颇有政声。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">罗亦儒</div>
+                    <div class="card-body">
+                        <p>字稚圭，广东番禺人，官至江西按察使。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">吴元翰</div>
+                    <div class="card-body">
+                        <p>字宗之，广东南海人，官至云南道监察御史。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">岑之豹</div>
+                    <div class="card-body">
+                        <p>字炳南，广东顺德人，官至广西按察使。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">尹明翼</div>
+                    <div class="card-body">
+                        <p>字美含，广东东莞人，官至湖广布政使。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">高魁</div>
+                    <div class="card-body">
+                        <p>字斗垣，广东新会人，官至南京兵部主事。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>这七位进士在明末政治舞台上均有不俗表现，为官期间多有建树，他们的成就不仅是个人荣耀，也是广东文化教育发达的重要体现。</p>
+        </section>
+
+        <section id="significance" class="section">
+            <h2 class="section-title">文化意义</h2>
+            <p>乙丑进士牌坊具有多重文化意义：</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">科举制度实物见证</div>
+                    <div class="card-body">
+                        <p>牌坊是古代科举制度的重要实物见证，体现了朝廷对人才的重视与表彰。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">广东文化教育象征</div>
+                    <div class="card-body">
+                        <p>七位广东学子同科中进士，是广东文化教育发达的重要标志。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">建筑艺术典范</div>
+                    <div class="card-body">
+                        <p>牌坊建筑工艺精湛，是明代石构建筑的杰出代表，具有很高的艺术价值。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>如今，乙丑进士牌坊屹立于中山大学校园内，不仅是一处历史遗迹，更是激励学子勤奋向学的精神象征。它见证了广东地区文化教育的繁荣发展，也承载着中华民族尊重知识、重视教育的优良传统。</p>
+        </section>
+
+        <section id="game" class="section">
+            <h2 class="section-title">进士登科闯关挑战</h2>
+            <div class="game-container">
+                <div class="game-header">
+                    <h3 class="game-title">进士登科闯关挑战</h3>
+                    <p class="game-description">穿越时空，体验明代学子科举之路，测试您对乙丑进士牌坊的了解程度！</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-step active">
+                        <div class="step-indicator">1</div>
+                        <div>县试</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-indicator">2</div>
+                        <div>乡试</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-indicator">3</div>
+                        <div>会试</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-indicator">4</div>
+                        <div>殿试</div>
+                    </div>
+                </div>
+                
+                <div id="intro-screen" class="game-card">
+                    <h3>欢迎来到科举考场！</h3>
+                    <p>您将体验明代学子的科举之路，通过回答相关问题来测试您对乙丑进士牌坊的了解。游戏结束后，您将获得相应的科举功名称号！</p>
+                    
+                    <h4>请选择您的挑战难度：</h4>
+                    <div class="difficulty-selector">
+                        <div class="difficulty-btn" data-difficulty="easy">秀才级</div>
+                        <div class="difficulty-btn" data-difficulty="medium">举人级</div>
+                        <div class="difficulty-btn" data-difficulty="hard">进士级</div>
+                    </div>
+                </div>
+                
+                <div id="game-screen" class="game-card hidden">
+                    <div class="timer-container">
+                        <div class="timer-bar" id="timer-bar"></div>
+                    </div>
+                    <div class="question-container">
+                        <h3 id="question-title">问题标题</h3>
+                        <p id="question-text">问题内容将显示在这里</p>
+                        <div class="options-container" id="options-container">
+                            <!-- 选项将通过JS动态添加 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="result-screen" class="result-container">
+                    <h3>科举结果公布！</h3>
+                    <div class="rank-badge">
+                        <span id="rank-title">进士</span>
+                        <span>及第</span>
+                    </div>
+                    <h4 id="result-message">恭喜您金榜题名！</h4>
+                    <p id="result-description">您已成功完成所有挑战</p>
+                    
+                    <div id="scholars-info">
+                        <h4>乙丑七进士</h4>
+                        <p>明天启五年（1625年）广东七位进士：梁士济、李觉斯、罗亦儒、吴元翰、岑之豹、尹明翼、高魁</p>
+                        <p>牌坊原立于广州四牌楼，20世纪40年代迁至岭南大学（现中山大学）校园。</p>
+                    </div>
+                    
+                    <button id="restart-btn" class="btn-primary">再试一次</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 乙丑进士牌坊研学项目 | 稻想文教</p>
+    </footer>
+
+    <script>
+        // 游戏数据和逻辑
+        const gameData = {
+            easy: [
+                {
+                    question: "乙丑进士牌坊位于哪所大学？",
+                    options: ["清华大学", "中山大学", "北京大学", "复旦大学"],
+                    answer: 1,
+                    explanation: "乙丑进士牌坊现位于中山大学南校区校园内，是中山大学的重要历史文化遗产。"
+                },
+                {
+                    question: "牌坊最初是为了表彰什么？",
+                    options: ["战争英雄", "学术成就", "商业成功", "艺术才华"],
+                    answer: 1,
+                    explanation: "牌坊是为了表彰明天启五年（1625年）广东七位学子同中进士的学术成就而建立的。"
+                },
+                {
+                    question: "牌坊最初建立于哪个朝代？",
+                    options: ["唐朝", "宋朝", "明朝", "清朝"],
+                    answer: 2,
+                    explanation: "乙丑进士牌坊建于明崇祯八年（1635年），是明代科举制度的重要实物见证。"
+                },
+                {
+                    question: "中山大学南校区又称什么园？",
+                    options: ["康乐园", "清华园", "燕园", "丽娃园"],
+                    answer: 0,
+                    explanation: "中山大学南校区又称康乐园，与北大的未名湖、武大的珞珈山并称中国大学最美景观。"
+                }
+            ],
+            medium: [
+                {
+                    question: "乙丑进士牌坊最初位于广州什么地点？",
+                    options: ["四牌楼", "十三行", "荔枝湾", "北京路"],
+                    answer: 0,
+                    explanation: "牌坊原位于广州四牌楼（今解放中路），20世纪40年代迁至现址。"
+                },
+                {
+                    question: "牌坊表彰的进士来自哪个省份？",
+                    options: ["广东省", "福建省", "浙江省", "江苏省"],
+                    answer: 0,
+                    explanation: "牌坊表彰的是明天启五年（1625年）广东七位进士，体现了广东文化教育的发达。"
+                },
+                {
+                    question: "牌坊何时迁至现址？",
+                    options: ["20世纪40年代", "19世纪末", "新中国成立初期", "改革开放后"],
+                    answer: 0,
+                    explanation: "牌坊于20世纪40年代因城市发展需要，由广州市政府迁至岭南大学（现中山大学）校园内。"
+                },
+                {
+                    question: "以下哪位不是乙丑进士？",
+                    options: ["李觉斯", "梁士济", "袁崇焕", "岑之豹"],
+                    answer: 2,
+                    explanation: "袁崇焕是明末著名军事家、抗清名将，但他并非乙丑进士。乙丑七进士包括：梁士济、李觉斯、罗亦儒、吴元翰、岑之豹、尹明翼、高魁。"
+                }
+            ],
+            hard: [
+                {
+                    question: "乙丑进士牌坊建于崇祯八年，是为了表彰哪一年的进士？",
+                    options: ["天启五年(1625)", "万历十五年(1587)", "崇祯元年(1628)", "嘉靖四十四年(1565)"],
+                    answer: 0,
+                    explanation: "牌坊建于明崇祯八年（1635年），是为了表彰明天启五年（1625年）广东七位进士。"
+                },
+                {
+                    question: "以下哪位乙丑进士曾官至刑部尚书？",
+                    options: ["李觉斯", "吴元翰", "尹明翼", "高魁"],
+                    answer: 0,
+                    explanation: "李觉斯官至刑部尚书，为官清正，颇有政声，是乙丑进士中官职最高者之一。"
+                },
+                {
+                    question: "牌坊何时被列入广州市文物保护单位？",
+                    options: ["1999年", "1949年", "1978年", "2010年"],
+                    answer: 0,
+                    explanation: "乙丑进士牌坊于1999年被列为广州市文物保护单位，得到更好的保护与研究。"
+                },
+                {
+                    question: "乙丑进士牌坊不包括以下哪种建筑特征？",
+                    options: ["四柱三间五楼", "砂岩砌筑", "石额刻字", "琉璃瓦顶"],
+                    answer: 3,
+                    explanation: "乙丑进士牌坊采用砂岩砌筑，为四柱三间五楼式结构，石额刻有'乙丑进士'字样，但不使用琉璃瓦顶。"
+                }
+            ]
+        };
+
+        // 游戏状态变量
+        let currentDifficulty = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval = null;
+        const questionTime = 15; // 每道题的秒数
+
+        // DOM 元素
+        const introScreen = document.getElementById('intro-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionTitle = document.getElementById('question-title');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const timerBar = document.getElementById('timer-bar');
+        const rankTitle = document.getElementById('rank-title');
+        const resultMessage = document.getElementById('result-message');
+        const resultDescription = document.getElementById('result-description');
+        const restartBtn = document.getElementById('restart-btn');
+        const progressSteps = document.querySelectorAll('.progress-step');
+
+        // 难度选择按钮事件监听
+        document.querySelectorAll('.difficulty-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                currentDifficulty = button.getAttribute('data-difficulty');
+                startGame();
+            });
+        });
+
+        // 重新开始按钮事件监听
+        restartBtn.addEventListener('click', () => {
+            resultScreen.style.display = 'none';
+            introScreen.classList.remove('hidden');
+            resetProgress();
+        });
+
+        // 开始游戏
+        function startGame() {
+            introScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        // 加载问题
+        function loadQuestion() {
+            resetProgress();
+            updateProgress();
+            
+            if (currentQuestionIndex >= gameData[currentDifficulty].length) {
+                endGame();
+                return;
+            }
+
+            const question = gameData[currentDifficulty][currentQuestionIndex];
+            questionTitle.textContent = `第 ${currentQuestionIndex + 1} 题（共 ${gameData[currentDifficulty].length} 题）`;
+            questionText.textContent = question.question;
+            
+            // 清空选项容器并添加新选项
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+            
+            // 启动计时器
+            startTimer();
+        }
+
+        // 启动计时器
+        function startTimer() {
+            let timeLeft = questionTime;
+            timerBar.style.width = '100%';
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerBar.style.width = `${(timeLeft / questionTime) * 100}%`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    checkAnswer(-1); // -1 表示超时
+                }
+            }, 1000);
+        }
+
+        // 检查答案
+        function checkAnswer(selectedIndex) {
+            clearInterval(timerInterval);
+            
+            const question = gameData[currentDifficulty][currentQuestionIndex];
+            const correctIndex = question.answer;
+            
+            // 显示正确答案和错误答案
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach((button, index) => {
+                if (index === correctIndex) {
+                    button.style.backgroundColor = '#4caf50';
+                    button.style.color = 'white';
+                } else if (index === selectedIndex && index !== correctIndex) {
+                    button.style.backgroundColor = '#f44336';
+                    button.style.color = 'white';
+                }
+                button.disabled = true;
+            });
+            
+            // 更新得分
+            if (selectedIndex === correctIndex) {
+                score++;
+            }
+            
+            // 延迟后加载下一题
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 2000);
+        }
+
+        // 结束游戏
+        function endGame() {
+            gameScreen.classList.add('hidden');
+            resultScreen.style.display = 'block';
+            
+            // 根据得分确定等级
+            const totalQuestions = gameData[currentDifficulty].length;
+            const percentage = (score / totalQuestions) * 100;
+            
+            let rank, message, description;
+            
+            if (percentage >= 90) {
+                rank = "状元";
+                message = "恭喜您高中状元！";
+                description = "您才学出众，堪称当代大儒！";
+            } else if (percentage >= 75) {
+                rank = "榜眼";
+                message = "恭喜您高中榜眼！";
+                description = "您学识渊博，堪称一代英才！";
+            } else if (percentage >= 60) {
+                rank = "探花";
+                message = "恭喜您高中探花！";
+                description = "您才学不凡，前途不可限量！";
+            } else {
+                rank = "同进士";
+                message = "恭喜您获得同进士出身";
+                description = "勤学苦读，下次必中更高榜位！";
+            }
+            
+            rankTitle.textContent = rank;
+            resultMessage.textContent = message;
+            resultDescription.textContent = `答对了 ${score} 题，共 ${totalQuestions} 题。${description}`;
+            
+            // 标记所有进度步骤为已完成
+            progressSteps.forEach(step => {
+                step.classList.add('completed');
+            });
+        }
+
+        // 更新进度指示器
+        function updateProgress() {
+            progressSteps.forEach((step, index) => {
+                if (index < currentQuestionIndex) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (index === currentQuestionIndex) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+        }
+
+        // 重置进度指示器
+        function resetProgress() {
+            progressSteps.forEach((step, index) => {
+                if (index === 0) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+        }
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
